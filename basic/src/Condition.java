@@ -46,5 +46,18 @@ class Condition{
 		}else if(mod == 1){
 			System.out.println("닭");
 		}
+		
+		double r = Math.random();// 0.0 <= r < 1.0
+		System.out.println(r);
+		int ran = (int)(r * 3 + 1); // 1.0 <= r < 4.0
+		System.out.println(ran);
+
+		if(ran == 1){
+			System.out.println("가위");
+		}else if(ran == 2){
+			System.out.println("바위");	
+		}else if(ran == 3){
+			System.out.println("보");
+		}
 	}
 }
