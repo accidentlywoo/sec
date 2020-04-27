@@ -1,3 +1,4 @@
+package step1;
 class Datatype{
 	public static void main(String[] args){
 		byte b1; // 변수 선언

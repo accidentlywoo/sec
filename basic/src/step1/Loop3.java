@@ -1,3 +1,4 @@
+package step1;
 import java.util.Scanner;
 
 public class Loop3 {
@@ -5,15 +6,6 @@ public class Loop3 {
 		// 1. 금액을 동전으로 환전하시오.
 		int money = 1240; // 500원 2개, 100원 2개 10원 4개
 		int change;
-//		int fiveT = money/500;
-//		change = money - (500 * fiveT);
-//		int oneH = change/100;
-//		change = change - (100 * oneH);
-//		int ten = change/10;
-//		change = change - (10 * ten);
-//		int one = 0;
-//		if(change != 0) 
-//			one = change;
 		
 		// way 2
 		change = money;
@@ -22,22 +14,22 @@ public class Loop3 {
 			int hun = 0;
 			int ten = 0;
 			int one = 0;
-			while(change >= 500) {
-				change = change - 500;
-				five++;
+			if(change >= 500) {
+				five = change / 500 ;
+				change = change % 500;
 			}
-			while(change >= 100) {
-				change = change - 100;
-				hun++;
+			if(change >= 100) {
+				hun = change / 100;
+				change = change % 100;
 			}
-			while(change >= 10) {
-				change = change - 10;
-				ten++;
+			if(change >= 10) {
+				ten = change / 10;
+				change = change % 10;
 			}
-			while(change >= 1) {
-				change = change - 1;
-				one++;
-			}
+			
+			one = change;
+			
+			// 반복문을 쓰지않아도 되는 경우에 쓰지말자.
 			System.out.println("500원 : "+five+", 100원 : "+ hun +", 10원 : "+ten+", 1원 : " + one);
 		}
 		
@@ -46,6 +38,13 @@ public class Loop3 {
 			char a = (char)i;
 			System.out.print(a);
 		}
+		
+		char alpha = 'C';
+		/*
+		 * while(alpha) {
+		 * 
+		 * }
+		 */
 			
 		
 		// 3. 1~10사이의 숫자 중 홀수의 총합과 짝수의 총합을 출력하시오.
@@ -66,7 +65,8 @@ public class Loop3 {
 	
 		System.out.println("소수 구분할 숫자를 입력하세요");
 		int s = sc.nextInt();
-		
+		if(s < 2)
+			System.out.println("입력한 \"+s+\"는 소수가 아닙니다");
 		for(int i = 2; i < s; i++) {
 			if(s / i  > 0)
 				flag = false;

@@ -1,3 +1,4 @@
+package step1;
 class Operator{
 	public static void main(String[] args){
 		System.out.println("짝수인지 비교할 숫자를 입력하세요");
