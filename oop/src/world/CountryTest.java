@@ -17,6 +17,10 @@ public class CountryTest {
 		Korea k;
 		k = new Korea();
 		k.population = 0;
+		k.setCapital("평양");
+		k.setLanguage("일본어");
+		
+		System.out.println(k.getCapital() +" : "+ k.getLanguage());
 		
 		/*
 		 * k.capital = "평양"; k.language = "일본어";
@@ -29,7 +33,7 @@ public class CountryTest {
 		  * 접근제어 : public, package(default), private
 		  * public - 누구나 접근 가능.
 		  * package(default) - 동일 패키지에서 접근가능.
-		  * pricate - 자기 클래스에서 접근 가능.  
+		  * private - 자기 클래스에서 접근 가능.  
 		 *  
 		 */
 	}

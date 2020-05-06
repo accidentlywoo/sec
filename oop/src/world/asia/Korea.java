@@ -17,6 +17,13 @@ public class Korea {
 			return; //void method escape
 		}
 	}
+	public String getCapital() {
+		return capital;
+	}
+	public void setCapital(String capital) {
+		this.capital = capital;
+	}
 
+	
 
 }
