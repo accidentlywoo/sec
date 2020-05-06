@@ -8,5 +8,10 @@ public class AsiaTest {
 		k.population = 0;
 		k.capital = "평양";
 		//k.language = "일본어";
+		
+		k.setLanguage("일본어");
+		System.out.println(k.getLanguage());
+		k.setLanguage("한국어");
+		System.out.println(k.getLanguage());
 	}
 }
