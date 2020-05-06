@@ -9,7 +9,7 @@ public class Person {
 	static String ang;
 	
 	void work() {
-		System.out.println("¿œ«—¥Ÿ.");
+		System.out.println("?.");
 	}
 	
 	void display() {
