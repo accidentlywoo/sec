@@ -25,4 +25,7 @@ public class Person {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+	public void printInfo() {
+		System.out.println("Person [name=" + name + ", addr=" + addr + "]");
+	}
 }

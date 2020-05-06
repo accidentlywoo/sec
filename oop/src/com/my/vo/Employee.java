@@ -49,8 +49,9 @@ public class Employee extends Person{
 	public void setComm(double comm) {
 		this.comm = comm;
 	}
-	public String printInfo() {
-		return "Employee [no=" + no + ", dept=" + dept + ", salary=" + salary + ", comm=" + comm + "]";
+	public void printInfo() {
+		//super.printInfo();
+		System.out.println("Employee [no=" + no + ", dept=" + dept + ", salary=" + salary + ", comm=" + comm + "]");
 	}
 
 	@Override
