@@ -7,9 +7,18 @@ class Child{
 		return "Child객체의 정보값은 "+this.iv+"입니다.";
 	}
 
-	public boolean equals(Child obj) {
-		return this.iv == obj.iv;
+	@Override
+	public boolean equals(Object obj) {
+		int i = ((Child)obj).iv;
+		System.out.println("오버라이딩이다!");
+		return this.iv == i;
 	}
+	
+//	public boolean equals(Child obj) {
+//		return this.iv == obj.iv;
+//	}
+//	
+	
 }
 public class ObjectTest {
 	public static void main(String[] args) {
