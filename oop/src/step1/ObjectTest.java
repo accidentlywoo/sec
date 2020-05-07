@@ -14,7 +14,7 @@ class Child{
 		}
 		return false;
 	}
-// Overloading하면 우선순위가 높아진다. But Overriding 효과를 볼 수 없다.!!!!
+//  Overloading하면 우선순위가 높아진다. But Overriding 효과를 볼 수 없다.!!!!
 //	public boolean equals(Child obj) {
 //		return this.iv == obj.iv;
 //	}
