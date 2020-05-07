@@ -8,12 +8,34 @@ class Child{
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if(obj instanceof Child) {
-			return this.iv == ((Child)obj).iv;
-		}
-		return false;
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + iv;
+		return result;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Child other = (Child) obj;
+		if (iv != other.iv)
+			return false;
+		return true;
+	}
+
+//	@Override
+//	public boolean equals(Object obj) {
+//		if(obj instanceof Child) {
+//			return this.iv == ((Child)obj).iv;
+//		}
+//		return false;
+//	}
 //  Overloading하면 우선순위가 높아진다. But Overriding 효과를 볼 수 없다.!!!!
 //	public boolean equals(Child obj) {
 //		return this.iv == obj.iv;
