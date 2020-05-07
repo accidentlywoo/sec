@@ -43,6 +43,7 @@ public class TempEmployee extends Employee {
 		this.time = time;
 	}
 
+	@Override
 	public double clacTotalSalary() {
 		return getSalary() * time;
 	}

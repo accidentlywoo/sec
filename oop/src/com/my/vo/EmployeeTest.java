@@ -18,8 +18,12 @@ public class EmployeeTest {
 //			//System.out.println("임시직 급여 : " + te.clacTotalSalaryTemp());
 //			System.out.println("임시직 급여 : " + te.clacTotalSalary());
 //		}
-		System.out.println("클래스 이름 갖고 오기 : " + employees[1].getClass().getName());
-	
+		System.out.println("클래스 이름 갖고 오기 : " + employees[1].getClass().getSimpleName());
+		System.out.println(employees[1].getClass().getSimpleName().equals("TempEmployee"));
+		for(int i = 0; i < 2; i++) {
+			System.out.println("실급 급여(정규직, 임시직) : " + employees[i].clacTotalSalary());
+		}
 		
+		System.out.println(employees[1]);
 	}
 }

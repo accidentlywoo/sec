@@ -61,11 +61,10 @@ public class Employee extends Person{
 		//super.printInfo();
 		System.out.println("Employee [no=" + no + ", dept=" + dept + ", salary=" + salary + ", comm=" + comm + "]");
 	}
-
+	
 	@Override
 	public String toString() {
 		return "Employee [no=" + no + ", dept=" + dept + ", salary=" + salary + ", comm=" + comm + "]";
 	}
-
-	
+	//valueof 와  toString의 오버라이딩을 알아보자!
 }
