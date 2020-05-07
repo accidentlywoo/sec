@@ -43,13 +43,11 @@ public class TempEmployee extends Employee {
 		this.time = time;
 	}
 
-//	@Override
-//	public double clacTotalSalary() {
-//		// TODO Auto-generated method stub
-//		return super.clacTotalSalary();
-//	}
-	
-	public double clacTotalSalaryTemp() {
+	public double clacTotalSalary() {
 		return getSalary() * time;
 	}
+	
+//	public double clacTotalSalaryTemp() {
+//		return getSalary() * time;
+//	}
 }
