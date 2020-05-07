@@ -11,16 +11,22 @@ class Child{
 	public boolean equals(Object obj) {
 		if(obj instanceof Child) {
 			return this.iv == ((Child)obj).iv;
-		}else {
-			return false;
 		}
+		return false;
 	}
-// Overloading하면 우선순위가 높아진다.	
+// Overloading하면 우선순위가 높아진다. But Overriding 효과를 볼 수 없다.!!!!
 //	public boolean equals(Child obj) {
 //		return this.iv == obj.iv;
 //	}
 }
 public class ObjectTest {
+	
+	public static void test(Object object1, Object object2) {
+		System.out.println("=======test()=========");
+		System.out.println(object1.equals(object2));
+		System.out.println("=========fin===========");
+	}
+	
 	public static void main(String[] args) {
 		Object o1, o2;
 		o1 = new Object();
@@ -71,5 +77,10 @@ public class ObjectTest {
 		
 		System.out.println(c1.toString());
 		System.out.println("custom equals : "+c1.equals(c2));
+		
+		test(new Object(), new Object());
+		test(s1, s2);
+		test(c1, c2);
+		
 	}
 }
