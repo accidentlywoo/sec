@@ -2,6 +2,8 @@ package step1;
 class Single{
 	int iv;
 	static int sv;
+	// modifier 의 순서가 바뀌어도 상관없다.
+	private static Single s = new Single();
 	private Single() {}
 	static void test() {
 //		System.out.println(this);
@@ -14,7 +16,8 @@ class Single{
 		sv =  sv+i;
 	}
 	static Single getInstance() {
-		return new Single();
+		
+		return s;
 	}
 }
 
@@ -46,7 +49,7 @@ public class StaticTest {
 		
 		Single s1 = Single.getInstance();
 		Single s2 = Single.getInstance();
-		System.out.println(s1 == s2);
+		System.out.println("Singleton Test : "+(s1 == s2));
 		
 		System.out.println(s1.sv);
 		System.out.println(s2.sv);
