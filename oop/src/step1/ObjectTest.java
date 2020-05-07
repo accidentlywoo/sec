@@ -9,9 +9,11 @@ class Child{
 
 	@Override
 	public boolean equals(Object obj) {
-		int i = ((Child)obj).iv;
-		System.out.println("오버라이딩이다!");
-		return this.iv == i;
+		if(obj instanceof Child) {
+			return this.iv == ((Child)obj).iv;
+		}else {
+			return false;
+		}
 	}
 	
 //	public boolean equals(Child obj) {
