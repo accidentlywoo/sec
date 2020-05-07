@@ -33,6 +33,7 @@ public class TempEmployee extends Employee {
 		super();
 		this.time = time;
 	}
+	
 
 	public int getTime() {
 		return time;
@@ -41,5 +42,14 @@ public class TempEmployee extends Employee {
 	public void setTime(int time) {
 		this.time = time;
 	}
+
+//	@Override
+//	public double clacTotalSalary() {
+//		// TODO Auto-generated method stub
+//		return super.clacTotalSalary();
+//	}
 	
+	public double clacTotalSalaryTemp() {
+		return getSalary() * time;
+	}
 }

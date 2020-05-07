@@ -25,6 +25,14 @@ public class Employee extends Person{
 		this.salary = salary;
 		this.comm = comm;
 	}
+	/**
+	 * 실급여를 계산한다 기본급 + (기본급 * 수달률)
+	 * @return 실급여를 반환한다
+	 */
+	public double clacTotalSalary() {
+		return salary + (salary * comm);
+	}
+	
 	public String getNo() {
 		return no;
 	}
