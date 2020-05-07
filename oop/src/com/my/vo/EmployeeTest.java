@@ -13,8 +13,12 @@ public class EmployeeTest {
 		System.out.println(employees[1].getClass().getDeclaredClasses());
 		System.out.println("임시직 급여 : " + employees[1].clacTotalSalary()); //clacTotalSalaryTemp
 		//System.out.println("임시직 급여 : " + employees[1].clacTotalSalaryTemp());
-		TempEmployee te = (TempEmployee) employees[1]; // 강제 Down Casting
+		if(employees[1] instanceof TempEmployee) {
+			TempEmployee te = (TempEmployee) employees[1]; // 강제 Down Casting
+			System.out.println("임시직 급여 : " + te.clacTotalSalaryTemp());
+		}
+		System.out.println("클래스 이름 갖고 오기 : " + employees[1].getClass().getName());
 	
-		System.out.println("임시직 급여 : " + te.clacTotalSalaryTemp());
+		
 	}
 }
