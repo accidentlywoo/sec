@@ -33,6 +33,7 @@ public class DoubleDispatch {
 		List<SNS> snss = Arrays.asList(new Facebook(), new Twitter());
 	
 		// 컴파일 시점에서 매개변수 타입체크에 걸려서 더블 디스패칭을 할 수 없다.
-		posts.forEach(p->snss.forEach(s->p.postOn(s)));
+		// Override 되지 않고, Overload를 사용했기 때문에!!!!
+		posts.forEach(p->snss.forEach((SNS s)->p.postOn(s)));
 	}
 }
