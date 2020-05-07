@@ -15,12 +15,10 @@ class Child{
 			return false;
 		}
 	}
-	
+// Overloading하면 우선순위가 높아진다.	
 //	public boolean equals(Child obj) {
 //		return this.iv == obj.iv;
 //	}
-//	
-	
 }
 public class ObjectTest {
 	public static void main(String[] args) {
