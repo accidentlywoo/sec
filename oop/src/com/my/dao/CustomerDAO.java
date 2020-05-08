@@ -20,13 +20,15 @@ public class CustomerDAO {
 	}
 	public void selectAll() {
 		Customer[] cc = Arrays.copyOf(this.customers, cnt);
+		// System.arraycopy(customers, 0, cc, 0, cnt);
 		System.out.println(Arrays.toString(cc));
 	}
 	
 	public Customer selectById(String id) {
 		for(int i = 0; i < cnt; i++) {
-			if(customers[i].getId().equals(id)) {
-				return customers[i];
+			Customer c = customers[i];
+			if(c.getId().equals(id)) {
+				return c;
 			}
 		}
 		return null;
