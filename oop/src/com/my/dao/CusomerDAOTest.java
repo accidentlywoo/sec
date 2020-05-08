@@ -6,7 +6,7 @@ import com.my.vo.Customer;
 
 public class CusomerDAOTest {
 	public static void main(String[] args) {
-		CustomerDAO dao = new CustomerDAO();
+		CustomerDAOArrayImpl dao = new CustomerDAOArrayImpl();
 		Customer customer = new Customer();
 		customer.setAddr("a");
 		customer.setId("1");
