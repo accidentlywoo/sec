@@ -39,5 +39,8 @@ public class Customer extends Person{
 	public void setPwd(String pwd) {
 		this.pwd = pwd;
 	}
-	
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", pwd=" + pwd + ", getName=" + getName() + ", getAddr=" + getAddr() + "]";
+	}
 }
