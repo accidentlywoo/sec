@@ -16,12 +16,11 @@ public class MethodTest {
 		return result;
 	}
 	static void printInfo(String name, String addr) {
-		//return (name + "´ÔÀÇ ÁÖ¼Ò´Â "+addr+"ÀÔ´Ï´Ù.");
-		System.out.println(name + "´ÔÀÇ ÁÖ¼Ò´Â "+addr+"ÀÔ´Ï´Ù.");
+		//return (name + "ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò´ï¿½ "+addr+"ï¿½Ô´Ï´ï¿½.");
+		System.out.println(name + "ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼Ò´ï¿½ "+addr+"ï¿½Ô´Ï´ï¿½.");
 	}
 	
 	public static void main(String[] args) {
-		
 		int kS, eS, mS;
 		kS = 100;
 		eS = 50;
@@ -29,12 +28,12 @@ public class MethodTest {
 		float avg = calculateAvg(kS, eS, mS);
 		System.out.println(avg);
 		
-		String name = "¿ì¿©´Ï";
-		String addr = "¼­¿ï½Ã ¼ÛÆÄ±¸";
+		String name = "ï¿½ì¿©ï¿½ï¿½";
+		String addr = "ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ä±ï¿½";
 		printInfo(name, addr); 
 		
-		// ¸Å°³º¯¼ö°¡ µ¿ÀûÀ¸·Î ¹Ù²î´Â ¸Þ¼Òµå
+		// ï¿½Å°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ ï¿½Þ¼Òµï¿½
 		int[] scores = {100, 50, 46, 97, 65};
-		System.out.println("Æò±Õ : " + calculateAvg(scores));
+		System.out.println("ï¿½ï¿½ï¿½ : " + calculateAvg(scores));
 	}
 }

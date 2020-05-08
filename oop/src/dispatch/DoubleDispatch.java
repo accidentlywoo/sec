@@ -51,7 +51,7 @@ public class DoubleDispatch {
 		List<SNS> snss = Arrays.asList(new Facebook(), new Twitter(), new GooglePlus());
 	
 		/*
-		 * 
+		 * 이전 예제는 static method에서 필터됬지만, 사실 다이나믹 패치는 파라미터에 영향을 받지 않는다.
 		 */
 		posts.forEach(p->snss.forEach((SNS s)->p.postOn(s)));
 	}
