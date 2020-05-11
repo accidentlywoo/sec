@@ -57,19 +57,27 @@ public class Test {
 		container.add(button);
 
 //		button.addActionListener(new MyButtonHandler(field));
-		
-		class MyButtonHandler implements ActionListener{
-			int cnt = 0;
-			
-			@Override
-			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출 Invoked when an action occurs.
-				cnt += 1;
-				// field = new JTextField();
-				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
+//		class MyButtonHandler implements ActionListener{
+//			int cnt = 0;
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출 Invoked when an action occurs.
+//				cnt += 1;
+//				// field = new JTextField();
+//				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
+//			}
+//		}
+//		
+//		button.addActionListener(new MyButtonHandler()); -> 클래스 이름이 있어야 하나?
+		button.addActionListener(new ActionListener(){ // -> 익명 클래스타입의 객체
+						int cnt = 0;
+						@Override
+						public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출
+							cnt += 1;
+							System.out.println(field.getText());
+							System.out.println(cnt+" 번 클릭되었습니다.");
 			}
-		}
-		
-		button.addActionListener(new MyButtonHandler());
+		});
 		
 		field.setText("우여니");
 		field.getText();// 입력 텍스트 들고오기 
