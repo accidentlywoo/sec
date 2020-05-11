@@ -41,7 +41,7 @@ public class Test {
 	public static void main(String[] args) {
 		JFrame frame; // 창 window
 		JButton button; // 
-		JTextField field; // 한줄 입력란
+		final JTextField field; // 한줄 입력란
 		Container container; // Back Board 역할  - 기본 레이아웃 : BoardLayout(동서남북중앙)
 		
 		frame = new JFrame();
@@ -64,7 +64,7 @@ public class Test {
 			@Override
 			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출 Invoked when an action occurs.
 				cnt += 1;
-				field.setText("메롱");
+				// field = new JTextField();
 				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
 			}
 		}
