@@ -22,21 +22,21 @@ import javax.swing.JTextField;
  * @author user
  *
  */
-class MyButtonHandler implements ActionListener{
-	int cnt = 0;
-	JTextField field;
-	
-	@Override
-	public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출
-		cnt += 1;
-		System.out.println(field.getText());
-		System.out.println(cnt+" 번 클릭되었습니다.");
-	}
-	public MyButtonHandler(JTextField field) {
-		this.field = field;
-	}
-	
-}
+//class MyButtonHandler implements ActionListener{
+//	int cnt = 0;
+//	JTextField field;
+//	
+//	@Override
+//	public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출
+//		cnt += 1;
+//		System.out.println(field.getText());
+//		System.out.println(cnt+" 번 클릭되었습니다.");
+//	}
+//	public MyButtonHandler(JTextField field) {
+//		this.field = field;
+//	}
+//	
+//}
 public class Test {
 	public static void main(String[] args) {
 		JFrame frame; // 창 window
@@ -56,7 +56,19 @@ public class Test {
 		container.add(field);
 		container.add(button);
 
-		button.addActionListener(new MyButtonHandler(field));
+//		button.addActionListener(new MyButtonHandler(field));
+		
+		class MyButtonHandler implements ActionListener{
+			int cnt = 0;
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출
+				cnt += 1;
+				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
+			}
+		}
+		
+		button.addActionListener(new MyButtonHandler());
 		
 		field.setText("우여니");
 		field.getText();// 입력 텍스트 들고오기 
