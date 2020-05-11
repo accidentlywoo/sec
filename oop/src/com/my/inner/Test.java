@@ -46,7 +46,7 @@ public class Test {
 		innerLocal.i();
 		
 		int mainLocal = 0;
-		final int mainLocal2 = 0;
+		int mainLocal2 = 0;
 		class Inner2{
 			int innerInstance = 0;
 			int mainLocal2 = 0;
