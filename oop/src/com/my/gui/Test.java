@@ -62,8 +62,9 @@ public class Test {
 			int cnt = 0;
 			
 			@Override
-			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출
+			public void actionPerformed(ActionEvent e) { // 클릭하면 자동 호출 Invoked when an action occurs.
 				cnt += 1;
+				field.setText("메롱");
 				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
 			}
 		}
