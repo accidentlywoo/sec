@@ -70,7 +70,7 @@ public class Test {
 				cnt += 1;
 				// field = new JTextField();
 				System.out.println("this t : "+this.t.getText()); // = System.out.println("this t : "+t.getText());
- 				System.out.println("this.t : "+test1);  // 개 나쁜 코드
+ 				System.out.println("this.t : "+test1);  // 개 나쁜 코드 -> 코드의 흐름을 모르는 새끼가 짜는 코드
 				System.out.println("test2 : "+test2);  // 개 나쁜 코드
 				System.out.println(field.getText()+" 입력,  "+cnt+" 번 클릭되었습니다.");
 			}
