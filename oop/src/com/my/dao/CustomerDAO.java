@@ -27,4 +27,11 @@ public interface CustomerDAO {
 	 * @throws FindException 아이디에 해당하는 고객이 없을 때 오류 발생, 처리오류 발생
 	 */
 	public Customer selectById(String id) throws FindException;
+	/**
+	 * 모든 회원의 이름에 해당 요소를 찾는다.
+	 * @param i 요소값
+	 * @return Customer[]
+	 * @throws FindException 아이디에 해당하는 고객이 없을 때 오류 발생, 처리오류 발생
+	 */
+	public Customer[] selectByName(String c) throws FindException;
 }

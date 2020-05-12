@@ -57,4 +57,35 @@ public class CustomerDAOArray implements CustomerDAO{
 	public Customer[] getCustomers() {
 		return customers;
 	}
+	@Override
+	public Customer[] selectByName(String cs) throws FindException {
+		int matchLen = 0;
+		String[] ids = new String[customers.length];
+		for(int i = 0; i < cnt; i++) { // 배열 길이 만큼
+			Customer c = customers[i];
+			char[] searchChar = c.getName().toCharArray();
+			for(char s : searchChar) {
+				if(String.valueOf(s).equals(cs)) {
+					ids[matchLen] = c.getId();
+					matchLen++;
+					break;
+				}
+			}
+		}
+		if(matchLen == 0) {
+			throw new FindException("해당값이 들어간 이름이있는 고객이 없습니다");
+		}else {
+			Customer[] result = new Customer[matchLen];
+			int idsLen = ids.length;
+			for(Customer cts : customers) {
+				for(int i = 0; i < idsLen; i++ ) {
+					if(cts.getId().equals(ids[i])) {
+						result[i] = cts;
+					}
+				}
+			}
+			return result;
+		}
+		
+	}
 }

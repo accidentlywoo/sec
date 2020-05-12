@@ -1,8 +1,11 @@
 package com.my.service;
 
+import java.util.Arrays;
+
 import com.my.dao.CustomerDAO;
 import com.my.dao.CustomerDAOArray;
 import com.my.exception.AddException;
+import com.my.exception.DuplicatedException;
 import com.my.exception.FindException;
 import com.my.vo.Customer;
 
@@ -33,8 +36,8 @@ public class CustomerService {
 		return customerDAO.selectById(id);
 	}
 
-	public Customer[] findByName(String name) throws FindException{ 
-		return null;
+	public Customer[] findByName(String c) throws FindException{ 
+		return customerDAO.selectByName(c);
 	}
 	
 	public void login(String id, String pwd) throws FindException{
@@ -97,6 +100,23 @@ public class CustomerService {
 		
 		try {
 			customerService.login("id1", "p22231");
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
+		try {
+			for(int i = 2; i <= 20; i ++) {
+				customerService.add(new Customer("b"+i,"b"+i,"b"+i,"b"+i));
+//					dao.insert(new Customer("b"+i,"b"+i,"b"+i,"b"+i));
+			}
+		} catch (DuplicatedException e) {
+			e.printStackTrace();
+		} catch (AddException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			Customer[] result = customerService.findByName("b");
+			System.out.println(Arrays.toString(result));
 		} catch (FindException e) {
 			e.printStackTrace();
 		}
