@@ -26,7 +26,7 @@ public class Test {
 		String notFoundFile = "b.txt";
 		// cmd에서 java 명령어로 접근한 경로에서 시작
 		try {
-			filInputStream = new FileInputStream(notFoundFile); // a.txt 자원과 연결
+			filInputStream = new FileInputStream(fileName); // a.txt 자원과 연결
 			int readValue = filInputStream.read();
 			System.out.println("readFile : "+readValue);
 //		}catch (IOException e || FileNotFoundException e) {   상속 관계의 Exception을 | 연산으로 나란히 둘 수 없다.
@@ -58,7 +58,7 @@ public class Test {
 		cnt++;	
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ArrayIndexOutOfBoundsException{
 		System.out.println("숫자를 입력하세요. : ");
 		Scanner sc = new Scanner(System.in);
 		try {
@@ -74,16 +74,12 @@ public class Test {
 		}
 		io();
 		// throws Exception 잡지 않으면 Exception 발생
-		try {
-			insertArr(9);
-			insertArr(-1);
-			insertArr(3);
-			insertArr(7);
-			insertArr(-3);
-			insertArr(99);
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("ArrayIndexOutOfBoundsException");
-		}
+		insertArr(9);
+		insertArr(-1);
+		insertArr(3);
+		insertArr(7);
+		insertArr(-3);
+		insertArr(99);
 		System.out.println("End");
 	}
 }
