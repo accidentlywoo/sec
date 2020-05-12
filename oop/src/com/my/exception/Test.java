@@ -67,9 +67,9 @@ public class Test {
 	public static void test2() throws ArrayIndexOutOfBoundsException, SQLException{
 		System.out.println("----- test2() -----");
 		io();
-		for(int i = 0; i < 10; i++) {
-			insertArr(i);
-		}
+//		for(int i = 0; i < 10; i++) {
+//			insertArr(i);
+//		}
 		System.out.println("-------------------");
 		// db 처리 연습을 위해..
 		throw new SQLException("DB Insert 실패");
@@ -95,11 +95,9 @@ public class Test {
 		try {
 			test2();
 		} catch (ArrayIndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 	}
 }
