@@ -53,15 +53,9 @@ public class Test {
 	
 	private static int[] arr = new int[5];
 	private static int cnt = 0;
-	public static void insertArr(int value) {
-		try {
-			arr[cnt] = value;
-			cnt++;	
-			// arr[cnt++] = value; 단항 연산자 쓰면 뺨맞는다. catch에서 6출력
-		} catch (ArrayIndexOutOfBoundsException e) {
-			System.out.println("저장소가 꽉 찼습니다. 현재 배열의 크기 ( cnt )="+cnt);
-		}
-		
+	public static void insertArr(int value) throws ArrayIndexOutOfBoundsException{ // 메소드 호출 부로 떠넘기기
+		arr[cnt] = value;
+		cnt++;	
 	}
 	
 	public static void main(String[] args) {
@@ -79,11 +73,13 @@ public class Test {
 			sc.close();
 		}
 		io();
+		// throws Exception 잡지 않으면 Exception 발생
 		insertArr(9);
 		insertArr(-1);
 		insertArr(3);
 		insertArr(7);
 		insertArr(-3);
 		insertArr(99);
+		System.out.println("End");
 	}
 }
