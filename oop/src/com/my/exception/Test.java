@@ -3,6 +3,7 @@ package com.my.exception;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -63,23 +64,17 @@ public class Test {
 		}
 	}
 	
-	public static void test2() {
+	public static void test2() throws ArrayIndexOutOfBoundsException, SQLException{
 		System.out.println("----- test2() -----");
 		io();
-//		for(int i = 0; i < 10; i ++) {
-//			try {
-//				insertArr(i);
-//			} catch (Exception e) {
-//			}
-//		}
-		try {
-			for(int i = 0; i < 10; i++) {
-				insertArr(i);
-			}
-		} catch (Exception e) {
+		for(int i = 0; i < 10; i++) {
+			insertArr(i);
 		}
-		// -> 효율이 더 좋다
-		System.out.println("---------------------");
+		System.out.println("-------------------");
+		// db 처리 연습을 위해..
+		throw new SQLException("DB Insert 실패");
+		
+		// System.out.println("---------------------"); SQL Exception은 컴파일 시점에서 체크하기때문에, Exception이후 닿을 수 없는 실행구문에서 컴파일 에러를 표시한다
 	}
 	
 	public static void main(String[] args) {
@@ -97,6 +92,14 @@ public class Test {
 			sc.close();
 		}
 		io();
-		test2();
+		try {
+			test2();
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
