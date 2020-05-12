@@ -23,9 +23,10 @@ public class Test {
 	public static void io() {
 		FileInputStream filInputStream;
 		String fileName = "a.txt";
+		String notFoundFile = "b.txt";
 		// cmd에서 java 명령어로 접근한 경로에서 시작
 		try {
-			filInputStream = new FileInputStream(fileName); // a.txt 자원과 연결
+			filInputStream = new FileInputStream(notFoundFile); // a.txt 자원과 연결
 			int readValue = filInputStream.read();
 			System.out.println("readFile : "+readValue);
 //		}catch (IOException e || FileNotFoundException e) {   상속 관계의 Exception을 | 연산으로 나란히 둘 수 없다.
