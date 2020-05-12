@@ -63,6 +63,25 @@ public class Test {
 		}
 	}
 	
+	public static void test2() {
+		System.out.println("----- test2() -----");
+		io();
+//		for(int i = 0; i < 10; i ++) {
+//			try {
+//				insertArr(i);
+//			} catch (Exception e) {
+//			}
+//		}
+		try {
+			for(int i = 0; i < 10; i++) {
+				insertArr(i);
+			}
+		} catch (Exception e) {
+		}
+		// -> 효율이 더 좋다
+		System.out.println("---------------------");
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("숫자를 입력하세요. : ");
 		Scanner sc = new Scanner(System.in);
@@ -78,18 +97,6 @@ public class Test {
 			sc.close();
 		}
 		io();
-		// throws Exception 잡지 않으면 Exception 발생
-		try {
-			insertArr(9);
-			insertArr(-1);
-			insertArr(3);
-			insertArr(7);
-			insertArr(-3);
-			insertArr(99);
-		} catch (ArrayIndexOutOfBoundsException e) {
-//			System.out.println("ArrayIndexOutOfBoundsException : cnt = "+Test.cnt);
-			System.out.println("새로 만든 메시지 출력 : " + e.getMessage());
-		}
-		System.out.println("End");
+		test2();
 	}
 }
