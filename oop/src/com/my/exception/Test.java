@@ -26,13 +26,17 @@ public class Test {
 		// cmd에서 java 명령어로 접근한 경로에서 시작
 		try {
 			filInputStream = new FileInputStream(fileName); // a.txt 자원과 연결
-			int readValue = filInputStream.read()
+			int readValue = filInputStream.read();
 			System.out.println("readFile : "+readValue);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace(); // 사용자에게 보여주지 말자. 디버깅용으로 쓰자
-		}catch (IOException e) {
-			// TODO: handle exception
+//		}catch (IOException e || FileNotFoundException e) {   상속 관계의 Exception을 | 연산으로 나란히 둘 수 없다.
+		}catch (IOException e) { // 몰아서 예외처리하기
+			e.printStackTrace();
 		}
+//		} catch (FileNotFoundException e) { //예외처리를 상세하게 할때는 자식관계를 먼저 비교해야 논리적 표현을 할 수 있다.
+//			e.printStackTrace(); // 사용자에게 보여주지 말자. 디버깅용으로 쓰자
+//		}catch (IOException e) {
+//			// TODO: handle exception
+//		}
 	}
 	
 	public static void main(String[] args) {
