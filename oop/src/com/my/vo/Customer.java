@@ -41,7 +41,7 @@ public class Customer extends Person{
 	}
 	@Override
 	public String toString() {
-		return "Customer [id=" + id + ", pwd=" + pwd + ", getName=" + getName() + ", getAddr=" + getAddr() + "]";
+		return "Customer [id=" + id + ", pwd=" + pwd + ", getName=" + getName() + ", getAddr=" + getAddr() + "]"+"\n";
 	}
 	// System 클래스의 Println() 메소드에서 valueof의 변형과 toString의 관계를 파보기
 }
