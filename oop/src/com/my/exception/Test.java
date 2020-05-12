@@ -74,12 +74,16 @@ public class Test {
 		}
 		io();
 		// throws Exception 잡지 않으면 Exception 발생
-		insertArr(9);
-		insertArr(-1);
-		insertArr(3);
-		insertArr(7);
-		insertArr(-3);
-		insertArr(99);
+		try {
+			insertArr(9);
+			insertArr(-1);
+			insertArr(3);
+			insertArr(7);
+			insertArr(-3);
+			insertArr(99);
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("ArrayIndexOutOfBoundsException");
+		}
 		System.out.println("End");
 	}
 }
