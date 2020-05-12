@@ -30,7 +30,7 @@ class Horse extends Canvas{ //paint(), repaint()
 
 public class HorseRace {
 	public static void main(String[] args) {
-		JButton run, ready;
+		JButton horseRun, horseReady;
 		JFrame frame;
 		Container c;
 		Horse[] horses;
@@ -44,8 +44,8 @@ public class HorseRace {
 			horses[i] = new Horse((i+1)+" 번 말");
 		}
 		
-		run = new JButton("달려");
-		ready = new  JButton("준비");
+		horseRun = new JButton("달려");
+		horseReady = new  JButton("준비");
 		
 		c.setLayout(new GridLayout(4, 1));
 
@@ -55,14 +55,14 @@ public class HorseRace {
 		
 		JPanel panel = new JPanel();
 		
-		panel.add(run);
-		panel.add(ready);
+		panel.add(horseRun);
+		panel.add(horseReady);
 		c.add(panel);
 		
 		frame.setSize(400, 200);
 		frame.setVisible(true);
 		
-		ready.addActionListener(new ActionListener() {
+		horseReady.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// repaint() -> update() 자동호출됨 : Canvas영역 CLEAR -> paint() 자동 호출됨
@@ -73,7 +73,7 @@ public class HorseRace {
 			}
 		}); // 이벤트 소스와 이벤트 핸들러 연결
 		
-		run.addActionListener(new ActionListener() {
+		horseRun.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < horsesLen; i++) {
