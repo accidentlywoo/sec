@@ -38,10 +38,28 @@ public class CustomerService {
 	}
 	
 	public void login(String id, String pwd) throws FindException{
-		Customer customer = customerDAO.selectById(id);
-		if(!customer.getPwd().equals(pwd)) {
-			throw new FindException("비밀번호가 일치하지 않습니다.");
+		try { 
+			Customer customer = customerDAO.selectById(id);
+			if(!customer.getPwd().equals(pwd)) {
+				throw new FindException("로그인 실패");
+			}
+		} catch (FindException e) {
+			throw new FindException("로그인 실패");
 		}
+//		Customer c;
+//		try {
+//			c = customerDAO.selectById(id);
+//		} catch (FindException e) {
+//			throw new FindException("로그인 실패");
+//		}
+//		
+//		try {
+//			if(!c.getPwd().equals(pwd)) {
+//				throw new FindException("로그인 실패");
+//			}
+//		} catch (FindException e) {
+//			throw new FindException("로그인 실패");
+//		}
 		System.out.println("로그인 성공");
 	}
 	public static void main(String[] args) {
@@ -73,6 +91,12 @@ public class CustomerService {
 		
 		try {
 			customerService.login("idㅁㅁㅁㅁ", "p1");
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			customerService.login("id1", "p22231");
 		} catch (FindException e) {
 			e.printStackTrace();
 		}
