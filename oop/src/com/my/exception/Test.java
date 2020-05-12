@@ -51,6 +51,19 @@ public class Test {
 		}
 	}
 	
+	private static int[] arr = new int[5];
+	private static int cnt = 0;
+	public static void insertArr(int value) {
+		try {
+			arr[cnt] = value;
+			cnt++;	
+			// arr[cnt++] = value; 단항 연산자 쓰면 뺨맞는다. catch에서 6출력
+		} catch (ArrayIndexOutOfBoundsException e) {
+			System.out.println("저장소가 꽉 찼습니다. 현재 배열의 크기 ( cnt )="+cnt);
+		}
+		
+	}
+	
 	public static void main(String[] args) {
 		System.out.println("숫자를 입력하세요. : ");
 		Scanner sc = new Scanner(System.in);
@@ -65,7 +78,12 @@ public class Test {
 			// 예외 관계없이 처리할 내용 
 			sc.close();
 		}
-		
 		io();
+		insertArr(9);
+		insertArr(-1);
+		insertArr(3);
+		insertArr(7);
+		insertArr(-3);
+		insertArr(99);
 	}
 }
