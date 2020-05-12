@@ -54,11 +54,16 @@ public class Test {
 	private static int[] arr = new int[5];
 	private static int cnt = 0;
 	public static void insertArr(int value) throws ArrayIndexOutOfBoundsException{ // 메소드 호출 부로 떠넘기기
-		arr[cnt] = value;
-		cnt++;	
+		try {
+			arr[cnt] = value;
+			cnt++;
+		} catch (ArrayIndexOutOfBoundsException e) {
+			//throw 강제 예외 발생 - 예외 메시지 만들어서 던지기
+			throw new ArrayIndexOutOfBoundsException("저장소가 꽉 찾습니다. 현재 cnt = "+cnt);
+		}
 	}
 	
-	public static void main(String[] args) throws ArrayIndexOutOfBoundsException{
+	public static void main(String[] args) {
 		System.out.println("숫자를 입력하세요. : ");
 		Scanner sc = new Scanner(System.in);
 		try {
@@ -74,12 +79,17 @@ public class Test {
 		}
 		io();
 		// throws Exception 잡지 않으면 Exception 발생
-		insertArr(9);
-		insertArr(-1);
-		insertArr(3);
-		insertArr(7);
-		insertArr(-3);
-		insertArr(99);
+		try {
+			insertArr(9);
+			insertArr(-1);
+			insertArr(3);
+			insertArr(7);
+			insertArr(-3);
+			insertArr(99);
+		} catch (ArrayIndexOutOfBoundsException e) {
+//			System.out.println("ArrayIndexOutOfBoundsException : cnt = "+Test.cnt);
+			System.out.println("새로 만든 메시지 출력 : " + e.getMessage());
+		}
 		System.out.println("End");
 	}
 }
