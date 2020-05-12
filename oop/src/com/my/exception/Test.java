@@ -40,13 +40,13 @@ public class Test {
 //			// TODO: handle exception
 //		}
 		finally {
-			try {
-				filInputStream.close(); // 자원과 연결해제
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}catch (NullPointerException e) {
-				e.printStackTrace();
+			if(filInputStream != null) { // try를 안할 수 있으면 안하는게 성능에 좋다.
+				try {
+					filInputStream.close(); // 자원과 연결해제
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 	}
