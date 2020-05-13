@@ -1,6 +1,6 @@
 package com.my.api;
 
-class A{
+class A implements Cloneable{
 	int i = 1;
 	int[] arr = {1, 2, 3};
 	public A shallowCopy() {
