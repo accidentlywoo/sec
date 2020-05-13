@@ -1,4 +1,4 @@
-package step1;
+package com.my.api;
 
 import java.util.Scanner;
 class DCL{
