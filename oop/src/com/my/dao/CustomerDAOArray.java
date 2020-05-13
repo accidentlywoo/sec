@@ -59,33 +59,62 @@ public class CustomerDAOArray implements CustomerDAO{
 	}
 	@Override
 	public Customer[] selectByName(String cs) throws FindException {
-		int matchLen = 0;
-		String[] ids = new String[customers.length];
-		for(int i = 0; i < cnt; i++) { // 배열 길이 만큼
+//		int matchLen = 0;
+//		String[] ids = new String[customers.length];
+//		for(int i = 0; i < cnt; i++) { // 배열 길이 만큼
+//			Customer c = customers[i];
+//			char[] searchChar = c.getName().toCharArray();
+//			for(char s : searchChar) {
+//				if(String.valueOf(s).equals(cs)) {
+//					ids[matchLen] = c.getId();
+//					matchLen++;
+//					break;
+//				}
+//			}
+//		}
+//		if(matchLen == 0) {
+//			throw new FindException("해당값이 들어간 이름이있는 고객이 없습니다");
+//		}else {
+//			Customer[] result = new Customer[matchLen];
+//			int idsLen = ids.length;
+//			for(Customer cts : customers) {
+//				for(int i = 0; i < idsLen; i++ ) {
+//					if(cts.getId().equals(ids[i])) {
+//						result[i] = cts;
+//					}
+//				}
+//			}
+//			//return result;
+//		}
+		// 선생님 풀이 시작
+		// 1) 단어에 해당하는 고객수 계산
+		int wordCnt = 0;
+		boolean[] flags = new boolean[cnt];
+		for(int i = 0; i < cnt; i++) {
 			Customer c = customers[i];
-			char[] searchChar = c.getName().toCharArray();
-			for(char s : searchChar) {
-				if(String.valueOf(s).equals(cs)) {
-					ids[matchLen] = c.getId();
-					matchLen++;
-					break;
-				}
+			String name = c.getName();
+			if(name.contains(cs)) {
+				flags[i] = true;
+				wordCnt++;
+			}else {
+				flags[i] = false;
 			}
-		}
-		if(matchLen == 0) {
-			throw new FindException("해당값이 들어간 이름이있는 고객이 없습니다");
-		}else {
-			Customer[] result = new Customer[matchLen];
-			int idsLen = ids.length;
-			for(Customer cts : customers) {
-				for(int i = 0; i < idsLen; i++ ) {
-					if(cts.getId().equals(ids[i])) {
-						result[i] = cts;
-					}
-				}
-			}
-			return result;
 		}
 		
+		if(wordCnt == 0) {
+			throw new FindException(cs+"단어를 포함하는 이름이 없습니다.");
+		}
+		// 2) 고객 수 만큼 배열생성
+		Customer[] arr = new Customer[wordCnt];
+		// 3) 배열에 단어에 해당하는 고객 추가
+		int index = 0;
+		for(int i = 0; i < cnt; i++) {
+			
+			if(flags[i]) {
+				arr[index] = customers[i];
+				index++;
+			}
+		}
+		return arr;
 	}
 }

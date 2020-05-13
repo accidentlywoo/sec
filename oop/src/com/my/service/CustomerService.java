@@ -36,8 +36,8 @@ public class CustomerService {
 		return customerDAO.selectById(id);
 	}
 
-	public Customer[] findByName(String c) throws FindException{ 
-		return customerDAO.selectByName(c);
+	public Customer[] findByName(String word) throws FindException{ 
+		return customerDAO.selectByName(word);
 	}
 	
 	public void login(String id, String pwd) throws FindException{
@@ -104,7 +104,7 @@ public class CustomerService {
 			e.printStackTrace();
 		}
 		try {
-			for(int i = 2; i <= 20; i ++) {
+			for(int i = 2; i <= 10; i ++) {
 				customerService.add(new Customer("b"+i,"b"+i,"b"+i,"b"+i));
 //					dao.insert(new Customer("b"+i,"b"+i,"b"+i,"b"+i));
 			}
@@ -116,7 +116,7 @@ public class CustomerService {
 		
 		try {
 			Customer[] result = customerService.findByName("b");
-			System.out.println(Arrays.toString(result));
+			System.out.println("findByName : "+Arrays.toString(result));
 		} catch (FindException e) {
 			e.printStackTrace();
 		}

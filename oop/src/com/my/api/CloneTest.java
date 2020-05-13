@@ -51,6 +51,5 @@ public class CloneTest {
 		
 		System.out.println("----------- deep copy ----------------");
 		System.out.println("a3.i : " + a3.i + "a3.arr : "+ Arrays.toString(a3.arr));
-		
 	}
 }
