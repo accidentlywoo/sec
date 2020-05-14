@@ -2,6 +2,7 @@ package com.my.api;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 
 public class CollectionTest {
@@ -27,5 +28,6 @@ public class CollectionTest {
 		Collection c;
 		c = new ArrayList();
 		test(c);
+		test(new HashSet());
 	}
 }
