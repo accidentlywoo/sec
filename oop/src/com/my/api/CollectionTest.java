@@ -15,12 +15,10 @@ public class CollectionTest {
 		
 		System.out.println("저장된 요소의 개수 : "+c.size());
 		
-		//c.get() 없는 메소드
-		Iterator iter = c.iterator(); //요소 조회
-		while(iter.hasNext()) {
-			Object e = iter.next();
-			System.out.println(e);
+		for(Object item : c) {
+			System.out.println(item);
 		}
+		
 		c.remove(new Integer(2)); // 요소 삭제 List 인터페이스 구현체는 index 순서로 삭제
 		System.out.println(c);
 	}
