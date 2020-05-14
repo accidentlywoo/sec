@@ -59,6 +59,12 @@ public class CustomerDAOList implements CustomerDAO2{
 		
 	}
 	public void delete(String id) throws RemoveException {
-		
+		for(Customer c : customers) {
+			if(c.getId().equals(id)) {
+				customers.remove(c);
+				return;
+			}
+		}
+		throw new RemoveException("해당 아이디를 삭제할 수 없습니다.");
 	}
 }
