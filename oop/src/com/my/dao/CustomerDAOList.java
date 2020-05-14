@@ -19,11 +19,11 @@ public class CustomerDAOList implements CustomerDAO2{
 
 	public void insert(Customer customer) throws AddException, DuplicatedException {
 		for(Customer c : customers) {
-			if(c.getId().equals(customer.getId())) {
+//			if(c.getId().equals(customer.getId())) {
+			if(c.equals(customer)) {
 				throw new DuplicatedException("이미 존재하는 아이디입니다.");
 			}
 		}
-		customers.add(customer);
 	}
 
 	public List<Customer> selectAll() throws FindException {
@@ -59,12 +59,16 @@ public class CustomerDAOList implements CustomerDAO2{
 		
 	}
 	public void delete(String id) throws RemoveException {
-		for(Customer c : customers) {
-			if(c.getId().equals(id)) {
-				customers.remove(c);
-				return;
-			}
+//		for(Customer c : customers) {
+//			if(c.getId().equals(id)) {
+//				customers.remove(c); //remove 메소드의 내부 구현을 이해하고 equals를 오버라이딩 해보자
+//				return;
+//			}
+//		}
+		Customer c = new Customer();
+		c.setId(id);
+		if(!customers.remove(c)) {
+			throw new RemoveException("해당 아이디를 삭제할 수 없습니다."); 
 		}
-		throw new RemoveException("해당 아이디를 삭제할 수 없습니다.");
 	}
 }
