@@ -69,63 +69,10 @@ public class CustomerDAOList implements CustomerDAO2{
 		
 	}
 	public void delete(String id) throws RemoveException {
-//		for(Customer c : customers) {
-//			if(c.getId().equals(id)) {
-//				customers.remove(c); //remove 메소드의 내부 구현을 이해하고 equals를 오버라이딩 해보자
-//				return;
-//			}
-//		}
 		Customer c = new Customer();
 		c.setId(id);
 		if(!customers.remove(c)) {
 			throw new RemoveException("해당 아이디를 삭제할 수 없습니다."); 
-		}
-	}
-	
-	public static void main(String[] args) {
-		CustomerDAO2 dao2 = new CustomerDAOList();
-		
-		try {
-			dao2.insert(new Customer("id1", "p1", "n1", "a1"));
-		} catch (AddException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			dao2.insert(new Customer("id2", "p2", "n2", "a2"));
-		} catch (AddException e) {
-			e.printStackTrace();
-		}
-		
-//		try {
-//			dao2.insert(new Customer("id2", "p2", "n2", "a2"));
-//		} catch (AddException e) {
-//			e.printStackTrace();
-//		}
-		try {
-			dao2.update(new Customer("id1", "update", "update", "update"));
-		} catch (ModifyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			System.out.println(dao2.selectAll());
-		} catch (FindException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		try {
-			dao2.delete("id1");
-		} catch (RemoveException e) {
-			e.printStackTrace();
-		}
-		
-		try {
-			System.out.println(dao2.selectAll());
-		} catch (FindException e) {
-			e.printStackTrace();
 		}
 	}
 }
