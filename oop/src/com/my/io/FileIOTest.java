@@ -123,8 +123,12 @@ public class FileIOTest {
 			fos = new FileOutputStream(copyFileName);
 			
 			int readValue = -1;
-			while((readValue = fis.read()) != -1) {
-				fos.write(readValue);
+//			while((readValue = fis.read()) != -1) {
+//				fos.write(readValue);
+//			}
+			byte[] bytes = new byte[1024];
+			while((readValue = fis.read(bytes)) != -1) {
+				fos.write(bytes, 0, readValue);
 			}
 		}catch (FileNotFoundException e) {
 		} catch (IOException e) {
