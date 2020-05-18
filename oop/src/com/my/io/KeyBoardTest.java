@@ -13,9 +13,13 @@ public class KeyBoardTest {
 		try {
 			int readCnt = is.read(bytes);
 			System.out.println("읽어온 바이트 수 : " + readCnt);
-			for(int i = 0; i < readCnt; i ++) {
-				System.out.println(bytes[i] + " : " + (char)bytes[i]);
-			}
+//			String sb = new String();
+//			for(int i = 0; i < readCnt-2; i ++) {
+//				sb = sb + (char)bytes[i];
+//			}
+//			System.out.println(sb);
+			String line = new String(bytes, 0, readCnt );
+			System.out.println(line);
 		}catch (IOException e) {
 		}
 		
