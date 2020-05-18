@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class FileIOTest {
@@ -60,7 +61,7 @@ public class FileIOTest {
 			
 			int readValue = -1;
 			while((readValue = is.read()) != -1) { // window : ctrl + z ==-1 / linux : ctrl + c == -1
-				fos.write(readValue);
+				fos.write(readValue); // is.read()  1byte를 읽고 쓰고 읽고쓰고 조합조합~
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -81,8 +82,14 @@ public class FileIOTest {
 		FileWriter fw = null;
 		try {
 			fw = new FileWriter(fileName);
-			for(int i = 0; i < 10; i++) {
-				fw.write(44032+i);
+//			for(int i = 0; i < 10; i++) {
+//				fw.write(44032+i);
+//			}
+			InputStream is = System.in;
+			InputStreamReader r = new InputStreamReader(is);
+			int readValue = -1;
+			while((readValue = r.read()) != -1) {
+				fw.write(readValue);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -98,7 +105,7 @@ public class FileIOTest {
 	}
 	public static void main(String[] args) {
 //		read(); // 한글 깨짐
-//		readByChar(); // 한글 깨지지 않음
+//		readByChar(); // 한글 깨 지지 않음
 		write(); // 한 깽 - 키보드로 입력받은 값을 a.txt에 출력
 //		readByChar();
 //		writeByChar(); // 한 안 깽
