@@ -2,7 +2,9 @@ package com.my.io;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class FileIOTest {
@@ -45,8 +47,54 @@ public class FileIOTest {
 			}
 		}
 	}
+	
+	public static void write() {
+		String fileName = "a.txt";
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(fileName);
+			for(int i = 0; i < 10; i ++) {
+				fos.write(48+i);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	public static void writeByChar() {
+		String fileName = "a.txt";
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(fileName);
+			for(int i = 0; i < 10; i++) {
+				fw.write(44032+i);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	public static void main(String[] args) {
-		read(); // 한글 깨짐
-//		readByChar();
+//		read(); // 한글 깨짐
+//		readByChar(); // 한글 깨지지 않음
+//		write(); // 한 깽
+		readByChar();
+		writeByChar(); // 한 안 깽
 	}
 }
