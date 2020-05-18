@@ -103,11 +103,46 @@ public class FileIOTest {
 			}
 		}
 	}
+	public static void copyNpast() {
+		String fileName = "a.txt";
+		String copyFileName = "b.txt";
+		FileReader fr = null;
+		FileWriter fw = null;
+		try {
+			fw = new FileWriter(copyFileName);
+			
+			fr = new FileReader(fileName);
+			int readValue = -1;
+			while((readValue = fr.read()) != -1) {
+				fw.write(readValue);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fr != null) {
+				try {
+					fr.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(fw != null) {
+				try {
+					fw.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 	public static void main(String[] args) {
 //		read(); // 한글 깨짐
 //		readByChar(); // 한글 깨 지지 않음
-		write(); // 한 깽 - 키보드로 입력받은 값을 a.txt에 출력
+//		write(); // 한 깽 - 키보드로 입력받은 값을 a.txt에 출력
 //		readByChar();
 //		writeByChar(); // 한 안 깽
+		copyNpast(); // a.txt 파일을 복사하여 b.txt에 붙여넣기
 	}
 }
