@@ -122,22 +122,18 @@ public class FileIOTest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
-			if(fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+			
+			try {
+				if(fis != null) {
+					fis.close(); // 파일 close는 개별적으로 해줘야 한다. 
 				}
-			}
-			if(fos != null) {
-				try {
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
+				if(fos != null) {
+					fos.close(); // xxxx Bad Code
 				}
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
-		
 	}
 	public static void copyNpastTxt() {
 		String fileName = "a.txt";
