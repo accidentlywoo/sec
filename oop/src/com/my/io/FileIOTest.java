@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class FileIOTest {
 	public static void read() {
@@ -53,8 +54,12 @@ public class FileIOTest {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(fileName);
-			for(int i = 0; i < 10; i ++) {
-				fos.write(48+i);
+			Scanner sc = new Scanner(System.in);
+			String line = sc.nextLine();
+			char[] lb = line.toCharArray();
+			int lbLen = lb.length;
+			for(int i = 0; i < lbLen; i ++) {
+				fos.write(lb[i]);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -93,8 +98,8 @@ public class FileIOTest {
 	public static void main(String[] args) {
 //		read(); // 한글 깨짐
 //		readByChar(); // 한글 깨지지 않음
-//		write(); // 한 깽
-		readByChar();
-		writeByChar(); // 한 안 깽
+		write(); // 한 깽 - 키보드로 입력받은 값을 a.txt에 출력
+//		readByChar();
+//		writeByChar(); // 한 안 깽
 	}
 }
