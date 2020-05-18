@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Scanner;
 
 public class FileIOTest {
@@ -54,12 +55,12 @@ public class FileIOTest {
 		FileOutputStream fos = null;
 		try {
 			fos = new FileOutputStream(fileName);
-			Scanner sc = new Scanner(System.in);
-			String line = sc.nextLine();
-			char[] lb = line.toCharArray();
-			int lbLen = lb.length;
-			for(int i = 0; i < lbLen; i ++) {
-				fos.write(lb[i]);
+			
+			InputStream is = System.in; // 키보드로 입력한 값
+			
+			int readValue = -1;
+			while((readValue = is.read()) != -1) { // window : ctrl + z ==-1 / linux : ctrl + c == -1
+				fos.write(readValue);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
