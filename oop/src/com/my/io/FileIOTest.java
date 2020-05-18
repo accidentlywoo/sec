@@ -103,7 +103,43 @@ public class FileIOTest {
 			}
 		}
 	}
-	public static void copyNpast() {
+	public static void copyNpastByte() {
+		String fileName = "춘추꽃.png"; 
+		String copyFileName = "춘추꽃copy.png";
+		
+		FileInputStream fis = null;
+		FileOutputStream fos = null;
+		
+		try {
+			fis = new FileInputStream(fileName);
+			fos = new FileOutputStream(copyFileName);
+			
+			int readValue = -1;
+			while((readValue = fis.read()) != -1) {
+				fos.write(readValue);
+			}
+		}catch (FileNotFoundException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	public static void copyNpastTxt() {
 		String fileName = "a.txt";
 		String copyFileName = "b.txt";
 		FileReader fr = null;
@@ -143,6 +179,7 @@ public class FileIOTest {
 //		write(); // 한 깽 - 키보드로 입력받은 값을 a.txt에 출력
 //		readByChar();
 //		writeByChar(); // 한 안 깽
-		copyNpast(); // a.txt 파일을 복사하여 b.txt에 붙여넣기
+//		copyNpastTxt(); // a.txt 파일을 복사하여 b.txt에 붙여넣기
+		copyNpastByte();
 	}
 }
