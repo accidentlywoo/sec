@@ -104,8 +104,16 @@ public class FileIOTest {
 		}
 	}
 	public static void copyNpastByte() {
-		String fileName = "춘추꽃.png"; 
-		String copyFileName = "춘추꽃copy.png";
+//		String fileName = "춘추꽃.png"; 
+//		String copyFileName = "춘추꽃copy.png";
+		String fileName; 
+		String copyFileName;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("원본파일(복사 대상)의 이름을 입력하세요. : ");
+		fileName = sc.nextLine();
+		
+		System.out.println("대상파일(복사 된)의 이름을 입력하세요. : ");
+		copyFileName = sc.nextLine();
 		
 		FileInputStream fis = null;
 		FileOutputStream fos = null;
