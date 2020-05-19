@@ -175,6 +175,6 @@ public class CustomerDAOFile implements CustomerDAO2{
 	}
 	public void delete(String id) throws RemoveException, FindException {
 		selectAll();
+		customers.remove(selectById(id));
 	}
-	
 }
