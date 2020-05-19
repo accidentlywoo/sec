@@ -134,17 +134,22 @@ public class DataIOTest {
 			dis = new DataInputStream(fis);
 			
 			
-			for(int i = 0; i < 2; i++) { // 고객 수를 모를땐?
+			while(true) { // 고객 수를 모를땐?
 				String id, pwd, name, addr;
 				id = dis.readUTF();
 				pwd = dis.readUTF();
 				name = dis.readUTF();
 				addr = dis.readUTF();
+				//EOFException 발생할 수 있다. 상위Exception인 IOException에서 걸러진다.
 				System.out.println("id : "+ id +", password : "+pwd+", name : "+name +", address : " + addr);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (EOFException e) {
+			// 내용이 없으면 무시된다.
+		}
+		catch (IOException e) {
 			e.printStackTrace();
 		}
 		
