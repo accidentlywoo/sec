@@ -45,7 +45,9 @@ public class FileTest {
 		d2 = new File(dirName);
 		
 		File[] listFiles = d2.listFiles(); // 하위 폴더, 파일
-		recursiveDiroectory(listFiles);
+		if(listFiles != null) {
+			recursiveDiroectory(listFiles);
+		}
 	}
 	public static void recursiveDiroectory(File[] listFiles) {
 		for(File file : listFiles) {
@@ -53,8 +55,10 @@ public class FileTest {
 				File[] listFiles2 = file.listFiles();
 				System.out.println("<DIR> : "+file);
 				recursiveDiroectory(listFiles2);
-			}else {
+			}else if(file.isFile()){
 				System.out.println(file.getName());
+			}else {
+				return;
 			}
 		}
 	}
