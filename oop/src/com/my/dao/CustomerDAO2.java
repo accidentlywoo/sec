@@ -10,10 +10,10 @@ import com.my.exception.RemoveException;
 import com.my.vo.Customer;
 
 public interface CustomerDAO2 {
-	void insert(Customer customer) throws AddException, DuplicatedException;
+	void insert(Customer customer) throws AddException, DuplicatedException, FindException;
 	List<Customer> selectAll() throws FindException;
 	Customer selectById(String id) throws FindException;
 	List<Customer> selectByName(String word) throws FindException;
-	void update(Customer customer) throws ModifyException;
-	void delete(String id) throws RemoveException;
+	void update(Customer customer) throws ModifyException,FindException;
+	void delete(String id) throws RemoveException,FindException;
 }

@@ -3,6 +3,7 @@ package com.my.view;
 import java.util.Scanner;
 
 import com.my.control.CustomerControl;
+import com.my.exception.FindException;
 import com.my.share.CustomerShare;
 import com.my.vo.Customer;
 
@@ -31,7 +32,11 @@ public class CustomerMainView {
 		String addr = getSc().nextLine();
 		
 		// 데이터 저장 logic
-		control.addControl(new Customer(id, pwd, name, addr));
+		try {
+			control.addControl(new Customer(id, pwd, name, addr));
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -49,7 +54,11 @@ public class CustomerMainView {
 		control.findByIdControll(id);
 	}
 	public void removeView() {
-		control.remove(CustomerShare.loginedCustomer);
+		try {
+			control.remove(CustomerShare.loginedCustomer);
+		} catch (FindException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public void modifyView() {
@@ -91,7 +100,12 @@ public class CustomerMainView {
 			System.out.println(" 잘못 입력하셨습니다. '1' 또는 '2' 를 입력하세요.");
 		}
 		
-		control.modifyControll(result);
+		try {
+			control.modifyControll(result);
+		} catch (FindException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public void loginView() {
 		System.out.print("아이디 입력 : ");

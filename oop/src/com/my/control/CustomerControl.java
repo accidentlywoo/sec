@@ -24,7 +24,7 @@ public class CustomerControl {
 		this.failView = new FailView();
 	}
 	
-	public void addControl(Customer customer) {
+	public void addControl(Customer customer) throws FindException {
 		try {
 			customerService.add(customer);
 			successView.addCustomerView("가입 "); // 가입 성공
@@ -62,7 +62,7 @@ public class CustomerControl {
 			failView.addCustimerView("로그인 실패");
 		}
 	}
-	public void modifyControll(Customer customer) {
+	public void modifyControll(Customer customer) throws FindException {
 		try {
 			customerService.modify(customer);
 			successView.addCustomerView(customer+"의 정보가 수정됬습니다.");
@@ -70,7 +70,7 @@ public class CustomerControl {
 			e.printStackTrace();
 		}
 	}
-	public void remove(Customer customer) {
+	public void remove(Customer customer) throws FindException {
 		try {
 			customerService.remove(customer);
 			successView.addCustomerView(customer+"의 정보가 삭제됬습니다.");

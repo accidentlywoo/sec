@@ -1,25 +1,19 @@
 package com.my.service;
 
-import java.util.Arrays;
 import java.util.List;
 
-import com.my.dao.CustomerDAO;
 import com.my.dao.CustomerDAO2;
-import com.my.dao.CustomerDAOArray;
-import com.my.dao.CustomerDAOList;
+import com.my.dao.CustomerDAOFile;
 import com.my.exception.AddException;
-import com.my.exception.DuplicatedException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.exception.RemoveException;
-import com.my.share.CustomerShare;
-import com.my.view.SuccessView;
 import com.my.vo.Customer;
 
 public class CustomerService2 {
 	private CustomerDAO2 customerDAO;
 	public CustomerService2() {
-		customerDAO = new CustomerDAOList();
+		customerDAO = new CustomerDAOFile();
 	}
 	public CustomerService2(CustomerDAO2 customerDAO) {
 		this.customerDAO = customerDAO;
@@ -31,7 +25,7 @@ public class CustomerService2 {
 		this.customerDAO = customerDAO;
 	}
 	
-	public void add(Customer customer) throws AddException{
+	public void add(Customer customer) throws AddException, FindException{
 		customerDAO.insert(customer);
 	}
 	
@@ -61,14 +55,14 @@ public class CustomerService2 {
 		System.out.println("로그인 성공");
 		
 	}
-	public void  modify(Customer customer) throws ModifyException {
+	public void  modify(Customer customer) throws ModifyException, FindException {
 		try {
 			customerDAO.update(customer);
 		} catch (ModifyException e) {
 			throw new ModifyException("정보 수정에 실패했습니다.");
 		}
 	}
-	public void remove(Customer customer) throws RemoveException {
+	public void remove(Customer customer) throws RemoveException, FindException {
 		try {
 			customerDAO.delete(customer.getId());
 		} catch (RemoveException e) {
