@@ -3,6 +3,7 @@ package com.my.io;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.Scanner;
 
 public class FileTest {
 	public static void main(String[] args) {
@@ -34,5 +35,26 @@ public class FileTest {
 				}
 			}
 		}
+		
+		File d2;
+		System.out.println("디렉토리이름을 입력하세요 : ");
+		Scanner sc = new Scanner(System.in);
+		
+		String dirName = sc.nextLine(); // 입력받는 값은 이스케이프 사용할 필요가 없다.
+		
+		d2 = new File(dirName);
+		
+		File[] listFiles = d2.listFiles(); // 하위 폴더, 파일
+		for(File file : listFiles) {
+			if(file.isDirectory()) { // 하위 폴더인 경우
+				//하위 폴더의 하위 폴더아 파일들을 모두 출력한다.
+				for(File fileitem : file.listFiles()) {
+					// 마지막 depth까지 파고들어가는 방법
+				}
+			}else {// 파일인 경우
+				System.out.println(file.getName());
+			}
+		}
+		
 	}
 }
