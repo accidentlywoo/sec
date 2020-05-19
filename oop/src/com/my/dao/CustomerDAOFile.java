@@ -3,7 +3,6 @@ package com.my.dao;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -21,24 +20,52 @@ import com.my.vo.Customer;
 public class CustomerDAOFile implements CustomerDAO2{
 	// 메소드 호출시마다 FileIO 통제.
 	private String fileName;
-	private List<Customer> customers = new ArrayList<Customer>();
 	 
 	public CustomerDAOFile() {
 		fileName = "customers.dat";
 	}
-	public void insert(Customer customer) throws AddException, DuplicatedException, FindException {
-		selectAll();
-		for(Customer item : customers) {
-			if(item.equals(customer)) {
-				throw new DuplicatedException("이미 존재하는 아이디입니다.");
-			}
-		}
+	public void insert(Customer customer) throws AddException, DuplicatedException{
+		FileInputStream fis = null;
+		DataInputStream dis = null;
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
+		
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			String targetId;
+			while(true) {
+				targetId = dis.readUTF();
+				
+				if(customer.getId().equals(targetId)) {
+					throw new DuplicatedException("이미 존재하는 아이디입니다.");
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		try {
 			fos = new FileOutputStream(fileName,true);
 			dos = new DataOutputStream(fos);
-			
 			dos.writeUTF(customer.getId());
 			dos.writeUTF(customer.getPwd());
 			dos.writeUTF(customer.getName());
@@ -67,7 +94,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 	}
 
 	public List<Customer> selectAll() throws FindException {
-		customers = new ArrayList<Customer>();
+		ArrayList<Customer> customers = new ArrayList<Customer>();
 		FileInputStream fis = null;
 		DataInputStream dis = null;
 		try {
@@ -106,21 +133,91 @@ public class CustomerDAOFile implements CustomerDAO2{
 	}
 
 	public Customer selectById(String id) throws FindException {
-		selectAll();
-		for(Customer customer : customers) {
-			if(customer.getId().equals(id)) {
-				return customer;
+		Customer customer = null;
+		
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			String targetId;
+			while(true) {
+				targetId = dis.readUTF();
+				if(targetId == id) {
+					customer = new Customer();
+					customer.setId(targetId);
+					customer.setPwd(dis.readUTF());
+					customer.setName(dis.readUTF());
+					customer.setAddr(dis.readUTF());
+					break;
+				}
+			}
+			if(customer == null) {
+				throw new FindException("해당아이디는 없습니다.");
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		throw new FindException("해당 아이디의 고객을 찾을 수 없습니다");
+		return customer;
 	}
 
 	public List<Customer> selectByName(String word) throws FindException {
-		selectAll();
 		List<Customer> result = new ArrayList<Customer>();
-		for(Customer customer : customers) {
-			if(customer.getName().contains(word)) {
-				result.add(customer);
+		
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		Customer customer = new Customer();
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			String targetName;
+			while(true) {
+				customer.setId(dis.readUTF());
+				customer.setPwd(dis.readUTF());
+				targetName = dis.readUTF();
+				if(targetName.contains(word)) {
+					customer.setName(targetName);
+					customer.setAddr(dis.readUTF());
+					result.add(customer);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		if(result.size() == 0) {
@@ -130,22 +227,55 @@ public class CustomerDAOFile implements CustomerDAO2{
 	}
 
 	public void update(Customer customer) throws ModifyException, FindException {
-		selectAll();
-		selectById(customer.getId());
-		// ??? 지우기 어쨰함?
-		customers.remove(customer);
-		Customer result = new Customer();
-		result.setId(customer.getId());
-		result.setPwd(customer.getPwd());
-		result.setName(customer.getName());
-		result.setAddr(customer.getId());
-		customers.add(result);
+		List<Customer> result = new ArrayList<Customer>();
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		Customer targetCustomer = null;
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			String targetId;
+			while(true) {
+				targetCustomer = new Customer();
+				targetId = dis.readUTF();
+				
+				targetCustomer.setId(targetId);
+				targetCustomer.setPwd(dis.readUTF());
+				targetCustomer.setName(dis.readUTF());
+				targetCustomer.setAddr(dis.readUTF());
+				if(!customer.equals(targetId)) {
+					result.add(targetCustomer);
+				}
+				result.add(customer);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		try {
 			fos = new FileOutputStream(fileName);
 			dos = new DataOutputStream(fos);
-			for(Customer item : customers) {
+			for(Customer item : result) {
 				dos.writeUTF(item.getId());
 				dos.writeUTF(item.getPwd());
 				dos.writeUTF(item.getName());
@@ -171,10 +301,78 @@ public class CustomerDAOFile implements CustomerDAO2{
 				}
 			}
 		}
-		
 	}
 	public void delete(String id) throws RemoveException, FindException {
-		selectAll();
-		customers.remove(selectById(id));
+		List<Customer> result = new ArrayList<Customer>();
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		Customer customer = null;
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			String targetId;
+			while(true) {
+				customer = new Customer();
+				customer.setId(dis.readUTF());
+				customer.setPwd(dis.readUTF());
+				targetId = dis.readUTF();
+				if(targetId != id) {
+					customer.setName(targetId);
+					customer.setAddr(dis.readUTF());
+					result.add(customer);
+				}
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (EOFException e) {
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fis != null) {
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dis != null) {
+				try {
+					dis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		try {
+			fos = new FileOutputStream(fileName);
+			dos = new DataOutputStream(fos);
+			for(Customer item : result) {
+				dos.writeUTF(item.getId());
+				dos.writeUTF(item.getPwd());
+				dos.writeUTF(item.getName());
+				dos.writeUTF(item.getAddr());
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dos != null) {
+				try {
+					dos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
