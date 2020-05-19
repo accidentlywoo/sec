@@ -43,18 +43,19 @@ public class FileTest {
 		String dirName = sc.nextLine(); // 입력받는 값은 이스케이프 사용할 필요가 없다.
 		
 		d2 = new File(dirName);
+		recursiveDiroectory(d2);
+		 // 하위 폴더, 파일
 		
-		File[] listFiles = d2.listFiles(); // 하위 폴더, 파일
-		if(listFiles != null) {
-			recursiveDiroectory(listFiles);
-		}
 	}
-	public static void recursiveDiroectory(File[] listFiles) {
+	public static void recursiveDiroectory(File directory) {
+		File[] listFiles = directory.listFiles();
+		if(listFiles != null) {
+			return;
+		}
 		for(File file : listFiles) {
 			if(file.isDirectory()) {
-				File[] listFiles2 = file.listFiles();
 				System.out.println("<DIR> : "+file);
-				recursiveDiroectory(listFiles2);
+				recursiveDiroectory(file);
 			}else if(file.isFile()){
 				System.out.println(file.getName());
 			}else {
