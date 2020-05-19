@@ -27,7 +27,10 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 	}
 
 	public void insert(Customer customer) throws AddException, DuplicatedException, FindException {
-		selectAll();
+		if(customers.size() == 0){
+			customers.add(customer);
+			return;
+		}
 		for(Customer c : customers) {
 			if(c.equals(customer)) {
 				throw new DuplicatedException("이미 존재하는 아이디입니다.");
@@ -76,7 +79,9 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 	}
 
 	public Customer selectById(String id) throws FindException {
-		selectAll();
+		if(customers.size() == 0){
+			return null;
+		}
 		for(Customer customer : customers) {
 			if(customer.getId().equals(id)) {
 				return customer;
@@ -86,7 +91,9 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 	}
 
 	public List<Customer> selectByName(String word) throws FindException {
-		selectAll();
+		if(customers.size() == 0){
+			return null;
+		}
 		List<Customer> result = new ArrayList<Customer>();
 		for(Customer customer : customers) {
 			if(customer.getName().contains(word)) {
@@ -100,7 +107,9 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 	}
 
 	public void update(Customer customer) throws ModifyException, FindException {
-		selectAll();
+		if(customers.size() == 0){
+			return;
+		}
 		selectById(customer.getId());
 		customers.remove(customer);
 		Customer result = new Customer();
@@ -111,6 +120,9 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 		customers.add(result);
 	}
 	public void delete(String id) throws RemoveException {
+		if(customers.size() == 0){
+			return;
+		}
 		Customer c = new Customer();
 		c.setId(id);
 		if(!customers.remove(c)) {
@@ -118,21 +130,19 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 		}
 	}
 	public void insertFile() {
-		try {
-			selectAll();
-		} catch (FindException e1) {
-			e1.printStackTrace();
-		}
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		try {
 			fos = new FileOutputStream(fileName);
 			dos = new DataOutputStream(fos);
-			for(Customer customer:customers) {
-				dos.writeUTF(customer.getId());
-				dos.writeUTF(customer.getPwd());
-				dos.writeUTF(customer.getName());
-				dos.writeUTF(customer.getAddr());
+			if(customers.size() == 0){
+				return;
+			}
+			for(Customer item : customers) {
+				dos.writeUTF(item.getId());
+				dos.writeUTF(item.getPwd());
+				dos.writeUTF(item.getName());
+				dos.writeUTF(item.getAddr());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

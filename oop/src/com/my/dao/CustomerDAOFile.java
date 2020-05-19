@@ -9,6 +9,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.my.exception.AddException;
 import com.my.exception.DuplicatedException;
@@ -24,45 +25,46 @@ public class CustomerDAOFile implements CustomerDAO2{
 	public CustomerDAOFile() {
 		fileName = "customers.dat";
 	}
-	public void insert(Customer customer) throws AddException, DuplicatedException{
-		FileInputStream fis = null;
-		DataInputStream dis = null;
+
+	private void CustomerFileDataOutputList(List<Customer> result){
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
-		
 		try {
-			fis = new FileInputStream(fileName);
-			dis = new DataInputStream(fis);
-			String targetId;
-			while(true) {
-				targetId = dis.readUTF();
-				
-				if(customer.getId().equals(targetId)) {
-					throw new DuplicatedException("이미 존재하는 아이디입니다.");
-				}
+			fos = new FileOutputStream(fileName);
+			dos = new DataOutputStream(fos);
+			for(Customer item : result) {
+				dos.writeUTF(item.getId());
+				dos.writeUTF(item.getPwd());
+				dos.writeUTF(item.getName());
+				dos.writeUTF(item.getAddr());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
-		} catch (EOFException e) {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
-			if(fis != null) {
+			if(fos != null) {
 				try {
-					fis.close();
+					fos.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
-			if(dis != null) {
+			if(dos != null) {
 				try {
-					dis.close();
+					dos.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
 		}
-		
+	}
+	private void CustomerFileDataOutput(Customer customer) throws FindException {
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		if(CustomerFileDataInput(customer.getId()) != null){
+			throw new FindException("이미 존재하는 정보입니다.");
+		}
 		try {
 			fos = new FileOutputStream(fileName,true);
 			dos = new DataOutputStream(fos);
@@ -90,30 +92,42 @@ public class CustomerDAOFile implements CustomerDAO2{
 				}
 			}
 		}
-		System.out.println("가입 정보 : "+ customer);
 	}
 
-	public List<Customer> selectAll() throws FindException {
+	private List<Customer> CustomerFileDataInputList(Optional<String> word){
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		FileInputStream fis = null;
 		DataInputStream dis = null;
+
 		try {
 			fis = new FileInputStream(fileName);
 			dis = new DataInputStream(fis);
 			while(true) {
-				Customer customer = new Customer();
-				customer.setId(dis.readUTF());
-				customer.setPwd(dis.readUTF());
-				customer.setName(dis.readUTF());
-				customer.setAddr(dis.readUTF());
-				customers.add(customer);
+				if(word == null){
+					Customer customer = new Customer();
+					customer.setId(dis.readUTF());
+					customer.setPwd(dis.readUTF());
+					customer.setName(dis.readUTF());
+					customer.setAddr(dis.readUTF());
+					customers.add(customer);
+				}else{
+					Customer customer = new Customer();
+					customer.setId(dis.readUTF());
+					customer.setPwd(dis.readUTF());
+					String targetName = dis.readUTF();
+					if(targetName.contains(word.orElseGet(String::new))){
+						customer.setName(targetName);
+						customer.setAddr(dis.readUTF());
+						break;
+					}else {
+						throw new FindException("찾는 아이디는 없습니다.");
+					}
+				}
 			}
-		} catch (FileNotFoundException e) {
+		} catch (IOException e){
+		}catch (FindException e) {
 			e.printStackTrace();
-		} catch (EOFException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
+		} finally {
 			if(fis != null) {
 				try {
 					fis.close();
@@ -132,9 +146,9 @@ public class CustomerDAOFile implements CustomerDAO2{
 		return customers;
 	}
 
-	public Customer selectById(String id) throws FindException {
+	private Customer CustomerFileDataInput(String id){
 		Customer customer = null;
-		
+
 		FileInputStream fis = null;
 		DataInputStream dis = null;
 		try {
@@ -143,7 +157,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 			String targetId;
 			while(true) {
 				targetId = dis.readUTF();
-				if(targetId == id) {
+				if(targetId.equals(id)) {
 					customer = new Customer();
 					customer.setId(targetId);
 					customer.setPwd(dis.readUTF());
@@ -152,15 +166,12 @@ public class CustomerDAOFile implements CustomerDAO2{
 					break;
 				}
 			}
-			if(customer == null) {
-				throw new FindException("해당아이디는 없습니다.");
-			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (EOFException e) {
 		} catch (IOException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
 			if(fis != null) {
 				try {
 					fis.close();
@@ -179,200 +190,37 @@ public class CustomerDAOFile implements CustomerDAO2{
 		return customer;
 	}
 
+	public void insert(Customer customer) throws AddException, DuplicatedException, FindException {
+		CustomerFileDataOutput(customer);
+		System.out.println("가입 정보 : "+ customer);
+	}
+
+	public List<Customer> selectAll() throws FindException {
+		return CustomerFileDataInputList(null);
+	}
+
+
+	public Customer selectById(String id) throws FindException {
+		if(CustomerFileDataInput(id) == null){
+			throw new FindException("해당 아이디를 찾을 수 없습니다.");
+		}
+		return CustomerFileDataInput(id);
+	}
+
 	public List<Customer> selectByName(String word) throws FindException {
-		List<Customer> result = new ArrayList<Customer>();
-		
-		FileInputStream fis = null;
-		DataInputStream dis = null;
-		Customer customer = new Customer();
-		try {
-			fis = new FileInputStream(fileName);
-			dis = new DataInputStream(fis);
-			String targetName;
-			while(true) {
-				customer.setId(dis.readUTF());
-				customer.setPwd(dis.readUTF());
-				targetName = dis.readUTF();
-				if(targetName.contains(word)) {
-					customer.setName(targetName);
-					customer.setAddr(dis.readUTF());
-					result.add(customer);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (EOFException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(dis != null) {
-				try {
-					dis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		if(result.size() == 0) {
-			throw new FindException("해당 글자가 포함된 아이디는 없습니다.");
-		}
-		return result;
+		return CustomerFileDataInputList(Optional.ofNullable(word));
 	}
 
 	public void update(Customer customer) throws ModifyException, FindException {
-		List<Customer> result = new ArrayList<Customer>();
-		FileInputStream fis = null;
-		DataInputStream dis = null;
-		Customer targetCustomer = null;
-		try {
-			fis = new FileInputStream(fileName);
-			dis = new DataInputStream(fis);
-			String targetId;
-			while(true) {
-				targetCustomer = new Customer();
-				targetId = dis.readUTF();
-				
-				targetCustomer.setId(targetId);
-				targetCustomer.setPwd(dis.readUTF());
-				targetCustomer.setName(dis.readUTF());
-				targetCustomer.setAddr(dis.readUTF());
-				if(!customer.equals(targetId)) {
-					result.add(targetCustomer);
-				}
-				result.add(customer);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (EOFException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(dis != null) {
-				try {
-					dis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		FileOutputStream fos = null;
-		DataOutputStream dos = null;
-		try {
-			fos = new FileOutputStream(fileName);
-			dos = new DataOutputStream(fos);
-			for(Customer item : result) {
-				dos.writeUTF(item.getId());
-				dos.writeUTF(item.getPwd());
-				dos.writeUTF(item.getName());
-				dos.writeUTF(item.getAddr());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(fos != null) {
-				try {
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(dos != null) {
-				try {
-					dos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		List<Customer> result = CustomerFileDataInputList(null);
+		result.remove(customer);
+		result.add(customer);
+		CustomerFileDataOutputList(result);
 	}
+
 	public void delete(String id) throws RemoveException, FindException {
-		List<Customer> result = new ArrayList<Customer>();
-		FileInputStream fis = null;
-		DataInputStream dis = null;
-		Customer customer = null;
-		try {
-			fis = new FileInputStream(fileName);
-			dis = new DataInputStream(fis);
-			String targetId;
-			while(true) {
-				customer = new Customer();
-				customer.setId(dis.readUTF());
-				customer.setPwd(dis.readUTF());
-				targetId = dis.readUTF();
-				if(targetId != id) {
-					customer.setName(targetId);
-					customer.setAddr(dis.readUTF());
-					result.add(customer);
-				}
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (EOFException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(fis != null) {
-				try {
-					fis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(dis != null) {
-				try {
-					dis.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		FileOutputStream fos = null;
-		DataOutputStream dos = null;
-		try {
-			fos = new FileOutputStream(fileName);
-			dos = new DataOutputStream(fos);
-			for(Customer item : result) {
-				dos.writeUTF(item.getId());
-				dos.writeUTF(item.getPwd());
-				dos.writeUTF(item.getName());
-				dos.writeUTF(item.getAddr());
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}finally {
-			if(fos != null) {
-				try {
-					fos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(dos != null) {
-				try {
-					dos.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+		List<Customer> result = CustomerFileDataInputList(null);
+		result.remove(CustomerFileDataInput(id));
+		CustomerFileDataOutputList(result);
 	}
 }

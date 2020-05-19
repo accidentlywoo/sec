@@ -128,7 +128,7 @@ public class CustomerMainView {
 	}
 	public void loginMenuView() {
 		System.out.println(
-				"작업 구분 : 1.- 내정보 보기, 2.- 내 정보 수정하기, 3.- 탈퇴하기, 4.-로그아웃하기, 9.- 종료");
+				"작업 구분 : 1.- 내정보 보기, 2.- 내 정보 수정하기, 3.- 탈퇴하기, 4.-로그아웃하기, 5.- 메인화면으로 돌아가기, 9.- 종료");
 		System.out.print("작업을 선택하세요 : ");
 	}
 	public void mainView(CustomerMainView mainView) {
@@ -171,6 +171,11 @@ public class CustomerMainView {
 			break;
 		case 4: // 로그아웃
 			System.out.println("로그아웃하기");
+			break;
+		case 5: // 메인화면으로 돌아가기
+			System.out.println("메인화면으로 돌아가기");
+			CustomerShare.loginedCustomer = null;
+			mainView.mainView(mainView);
 			break;
 		case 9: // 종료
 			break;	
