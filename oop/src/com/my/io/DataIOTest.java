@@ -2,6 +2,7 @@ package com.my.io;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -75,8 +76,84 @@ public class DataIOTest {
 			e.printStackTrace();
 		}
 	}
+	public static void writeCustomer() {
+		String fileName = "customers.dat";
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		
+		try {
+			fos = new FileOutputStream(fileName);
+			dos = new DataOutputStream(fos);
+			
+			String id, pwd, name, addr;
+			id = "id1";
+			pwd = "p1";
+			name = "n1";
+			addr = "a1";
+			dos.writeUTF(id);
+			dos.writeUTF(pwd);
+			dos.writeUTF(name);
+			dos.writeUTF(addr);
+			
+			id = "id2";
+			pwd = "p2";
+			name = "n2";
+			addr = "a2";
+			dos.writeUTF(id);
+			dos.writeUTF(pwd);
+			dos.writeUTF(name);
+			dos.writeUTF(addr);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+			if(dos != null) {
+				try {
+					dos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}	
+	public static void readCustomer() {
+		String fileName = "customers.dat";
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+		
+		try {
+			fis = new FileInputStream(fileName);
+			dis = new DataInputStream(fis);
+			
+			
+			for(int i = 0; i < 2; i++) { // 고객 수를 모를땐?
+				String id, pwd, name, addr;
+				id = dis.readUTF();
+				pwd = dis.readUTF();
+				name = dis.readUTF();
+				addr = dis.readUTF();
+				System.out.println("id : "+ id +", password : "+pwd+", name : "+name +", address : " + addr);
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	public static void main(String[] args) {
-		writeDataFilter();
-		readDataFilter();
+//		writeDataFilter();
+//		readDataFilter();
+		
+//		writeCustomer();
+		readCustomer();
 	}
 }
