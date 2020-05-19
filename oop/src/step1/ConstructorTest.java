@@ -1,4 +1,5 @@
 package step1;
+
 class Circle {
 	double radius;
 	final double pi = 3.14;
@@ -43,6 +44,15 @@ class Rectangle{
 	public Rectangle(double width, double height) {
 		this.width = width;
 		this.height = height;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Rectangle rectangle = (Rectangle) o;
+		return Double.compare(rectangle.width, width) == 0 &&
+				Double.compare(rectangle.height, height) == 0;
 	}
 
 }
