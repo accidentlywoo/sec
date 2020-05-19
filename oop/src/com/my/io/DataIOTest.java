@@ -82,7 +82,8 @@ public class DataIOTest {
 		DataOutputStream dos = null;
 		
 		try {
-			fos = new FileOutputStream(fileName);
+			//fos = new FileOutputStream(fileName);
+			fos = new FileOutputStream(fileName, true); // 파일 내용 추가 생성
 			dos = new DataOutputStream(fos);
 			
 			String id, pwd, name, addr;
