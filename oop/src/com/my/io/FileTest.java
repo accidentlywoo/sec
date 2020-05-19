@@ -54,7 +54,7 @@ public class FileTest {
 		}
 		for(File file : listFiles) {
 			if(file.isDirectory()) {
-				System.out.println("<DIR> : "+file);
+				System.out.println("<DIR> : "+file); 
 				recursiveDiroectory(file);
 			}else if(file.isFile()){
 				System.out.println(file.getName());
