@@ -45,16 +45,17 @@ public class FileTest {
 		d2 = new File(dirName);
 		
 		File[] listFiles = d2.listFiles(); // 하위 폴더, 파일
+		recursiveDiroectory(listFiles);
+	}
+	public static void recursiveDiroectory(File[] listFiles) {
 		for(File file : listFiles) {
-			if(file.isDirectory()) { // 하위 폴더인 경우
-				//하위 폴더의 하위 폴더아 파일들을 모두 출력한다.
-				for(File fileitem : file.listFiles()) {
-					// 마지막 depth까지 파고들어가는 방법
-				}
-			}else {// 파일인 경우
+			if(file.isDirectory()) {
+				File[] listFiles2 = file.listFiles();
+				System.out.println("<DIR> : "+file);
+				recursiveDiroectory(listFiles2);
+			}else {
 				System.out.println(file.getName());
 			}
 		}
-		
 	}
 }
