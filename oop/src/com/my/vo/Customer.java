@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Customer extends Person{
 	private String id;
-	private String pwd;
+	transient private String pwd;
 	public Customer() {
 		// super(); 컴파일 시점에 자동 추가됨
 	}
