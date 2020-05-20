@@ -57,6 +57,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 			}
 		}
 	}
+	
 	private void CustomerFileDataOutput(Customer customer) throws FindException {
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;

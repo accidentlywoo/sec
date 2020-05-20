@@ -2,27 +2,22 @@ package com.my.vo;
 
 public class Customer {
 
-	private long no;
-	private String id;
+	private long no; // unique 변경 불가
+	private String id; // unique 변경 불가
 	private String pwd;
-	
 	private String name;
+	
 	private String phoneNumber;
 	private String email;
 	private String addr;
-	
-	private long point;
-	private long like;
-	private long hate;
-	
-	private boolean sms;
-	private boolean emailReception;
-	
-	public String getId() {
-		return id;
-	}
 	public long getNo() {
 		return no;
+	}
+	public void setNo(long no) {
+		this.no = no;
+	}
+	public String getId() {
+		return id;
 	}
 	public void setId(String id) {
 		this.id = id;
@@ -57,31 +52,12 @@ public class Customer {
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
-	
-	
-	public Customer() {
-	}
-	
-	
-	public Customer(String id, String pwd, String name) {
-		this.id = id;
-		this.pwd = pwd;
-		this.name = name;
-	}
-	
-	public Customer(String id, String pwd, String name, String phoneNumber, String email, String addr) {
-		this.id = id;
-		this.pwd = pwd;
-		this.name = name;
-		this.phoneNumber = phoneNumber;
-		this.email = email;
-		this.addr = addr;
-	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (int) (no ^ (no >>> 32));
 		return result;
 	}
 	@Override
@@ -98,40 +74,9 @@ public class Customer {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (no != other.no)
+			return false;
 		return true;
-	}
-	public long getPoint() {
-		return point;
-	}
-	public void setPoint(long point) {
-		this.point = point;
-	}
-	public long getLike() {
-		return like;
-	}
-	public void setLike(long like) {
-		this.like = like;
-	}
-	public long getHate() {
-		return hate;
-	}
-	public void setHate(long hate) {
-		this.hate = hate;
-	}
-	public boolean isSms() {
-		return sms;
-	}
-	public void setSms(boolean sms) {
-		this.sms = sms;
-	}
-	public boolean isEmailReception() {
-		return emailReception;
-	}
-	public void setEmailReception(boolean emailReception) {
-		this.emailReception = emailReception;
-	}
-	public void setNo(long no) {
-		this.no = no;
 	}
 	
 }
