@@ -1,6 +1,8 @@
 package com.my.vo;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person{
 	//private String name;
 	protected String name;
 	private String addr;

@@ -1,6 +1,8 @@
 package com.my.vo;
 
-public class Customer extends Person{
+import java.io.Serializable;
+
+public class Customer extends Person implements Serializable{
 	private String id;
 	private String pwd;
 	public Customer() {
