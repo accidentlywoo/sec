@@ -39,9 +39,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 				dos.writeUTF(item.getAddr());
 			}
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
 		}finally {
 			if(fos != null) {
 				try {

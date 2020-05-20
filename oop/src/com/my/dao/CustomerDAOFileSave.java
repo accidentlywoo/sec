@@ -80,7 +80,7 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 
 	public Customer selectById(String id) throws FindException {
 		if(customers.size() == 0){
-			return null;
+			throw new FindException("등록 고객이 없습니다.");
 		}
 		for(Customer customer : customers) {
 			if(customer.getId().equals(id)) {
@@ -92,7 +92,7 @@ public class CustomerDAOFileSave implements CustomerDAO2{
 
 	public List<Customer> selectByName(String word) throws FindException {
 		if(customers.size() == 0){
-			return null;
+			throw new FindException("등록 고객이 없습니다.");
 		}
 		List<Customer> result = new ArrayList<Customer>();
 		for(Customer customer : customers) {
