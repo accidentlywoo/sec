@@ -1,8 +1,7 @@
 package com.my.vo;
 
-import java.io.Serializable;
-
 public class Customer extends Person{
+	private static final long serialVersionUID = 1L;
 	private String id;
 	transient private String pwd;
 	public Customer() {

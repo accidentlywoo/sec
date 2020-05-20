@@ -14,7 +14,7 @@ public class ObjectIOTest {
 	public static void write() {
 		ObjectOutputStream oos = null; // 보조 스트림.
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream("a.ser"));
+			oos = new ObjectOutputStream(new FileOutputStream("a.ser",true));
 			oos.writeObject(new Date()); // 객체 직렬화
 			oos.writeObject("직렬화");
 			oos.writeObject(true); // 컴파일시 Auto Boxing :  oos.writeObject(new Boolean(true)); 
@@ -38,19 +38,20 @@ public class ObjectIOTest {
 		ObjectInputStream ois = null;
 		try {
 			ois = new ObjectInputStream(new FileInputStream("a.ser"));
-			Date dt = (Date)ois.readObject();
-			System.out.println(dt); // 현재 시간이 아니고 직렬화할때의 시간을 표시한다.
-			String str = (String)ois.readObject();
-			System.out.println(str);
-			boolean b = (boolean)ois.readObject();
-			// 컴파일 단계에서 자동적으로 코드가 변화는 과정
-			//Object o = ois.readObject();
-			//Boolean bool = (Boolean)o;
-			//boolean b = bool.booleanValue();
-			System.out.println(b);
-			Customer customer = (Customer)ois.readObject();
-			System.out.println(customer);
-			
+			for(int i = 0; i < 2; i++) {
+				Date dt = (Date)ois.readObject();
+				System.out.println(dt); // 현재 시간이 아니고 직렬화할때의 시간을 표시한다.
+				String str = (String)ois.readObject();
+				System.out.println(str);
+				boolean b = (boolean)ois.readObject();
+				// 컴파일 단계에서 자동적으로 코드가 변화는 과정
+				//Object o = ois.readObject();
+				//Boolean bool = (Boolean)o;
+				//boolean b = bool.booleanValue();
+				System.out.println(b);
+				Customer customer = (Customer)ois.readObject();
+				System.out.println(customer);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -67,7 +68,8 @@ public class ObjectIOTest {
 	}
 	
 	public static void main(String[] args) {
-		write();
+//		write();
+//		write();
 		read();
 	}
 }
