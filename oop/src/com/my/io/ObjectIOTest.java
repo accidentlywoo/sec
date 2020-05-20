@@ -67,7 +67,7 @@ public class ObjectIOTest {
 	}
 	
 	public static void main(String[] args) {
-//		write();
+		write();
 		read();
 	}
 }

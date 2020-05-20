@@ -2,7 +2,7 @@ package com.my.vo;
 
 import java.io.Serializable;
 
-public class Person{
+public class Person implements Serializable{
 	//private String name;
 	protected String name;
 	private String addr;
