@@ -1,5 +1,15 @@
 package com.my.thread;
 
+class First extends Thread{
+	public void run() {
+		for(int i = 1; i <= 100; i++) {
+			Thread currentThread = Thread.currentThread();
+			String currtName = currentThread.getName();
+			System.out.println("currentThread Name : " + currtName+ " i = "+i);
+		}
+	}
+}
+
 public class Test {
 	public static void a() {
 		Thread currentThread = Thread.currentThread();
@@ -23,5 +33,13 @@ public class Test {
 		 *		7. main() 호출됨
 		 */
 		a();
+		
+		First one = new First();
+//		one.run();// 새로운 스레드 시작이 아님. main Thread와 같은 name이 나온다,
+		one.start(); // 새로운 Thread-0
+//		one.start(); // java.lang.IllegalThreadStateException
+		First one1 = new First();
+		one1.start(); // 새로운 Thread-1
+		
 	}
 }
