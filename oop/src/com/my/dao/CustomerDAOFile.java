@@ -195,7 +195,11 @@ public class CustomerDAOFile implements CustomerDAO2{
 	}
 
 	public List<Customer> selectAll() throws FindException {
-		return CustomerFileDataInputList(null);
+		List<Customer> customers = CustomerFileDataInputList(null);
+		if(customers.size() == 0) {
+			throw new FindException("저장소가 없습니다.");
+		}
+		return customers;
 	}
 
 
