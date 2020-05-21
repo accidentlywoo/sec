@@ -23,17 +23,16 @@ public class Test {
 		 *		7. main() 호출됨
 		 */
 		a();
-		
+		Second s = new Second();
 		First one = new First();
+		First one1 = new First();
+		Thread two = new Thread(s);
 //		one.run();// 새로운 스레드 시작이 아님. main Thread와 같은 name이 나온다,
+		two.start();
 		one.start(); // 새로운 Thread-0
 //		one.start(); // java.lang.IllegalThreadStateException
-		First one1 = new First();
 		one1.start(); // 새로운 Thread-1
-		Second s = new Second();
 //		s.run();
-		
-		Thread two = new Thread(s);
 		two.start();
 	}
 }
