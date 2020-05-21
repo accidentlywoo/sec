@@ -14,7 +14,8 @@ public class CustomerMainView {
 
 	public CustomerMainView() {
 		this.sc = new Scanner(System.in);
-		this.control = new CustomerControl();
+		this.control = CustomerControl.getInstance();
+		//this.control = new CustomerControl();
 	}
 	public Scanner getSc() {
 		return sc;

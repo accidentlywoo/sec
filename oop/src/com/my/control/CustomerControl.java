@@ -14,14 +14,22 @@ import com.my.vo.Customer;
 
 public class CustomerControl {
 
+	private static CustomerControl control = new CustomerControl();
+//	private static final CustomerControl control = new CustomerControl();
 	private CustomerService2 customerService;
 	private SuccessView successView;
 	private FailView failView;
 	
-	public CustomerControl() {
-		this.customerService = new CustomerService2();
-		this.successView = new SuccessView();
-		this.failView = new FailView();
+	private CustomerControl() {
+		//this.customerService = new CustomerService2();
+//		this.successView = new SuccessView();
+		successView = SuccessView.getInstance();
+//		this.failView = new FailView();
+		failView = FailView.getInstance();
+	}
+	
+	public static CustomerControl getInstance() {
+		return control;
 	}
 	
 	public void addControl(Customer customer) throws FindException {
