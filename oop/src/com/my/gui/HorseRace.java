@@ -51,6 +51,7 @@ public class HorseRace {
 				// repaint() -> update() 자동호출됨 : Canvas영역 CLEAR -> paint() 자동 호출됨
 				for(Horse horse : horses) {
 					horse.x = 10;
+					horse.flag = false;
 					horse.repaint();
 				}
 			}

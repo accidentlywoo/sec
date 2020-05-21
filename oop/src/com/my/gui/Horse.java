@@ -8,6 +8,7 @@ public class Horse extends Canvas implements Runnable{ //paint(), repaint()
 	String name;
 	int x = 0;
 	int y = 10; // px 단위 위치
+	boolean flag;
 	public Horse(String name) {
 		this.name = name;
 	}
@@ -22,8 +23,9 @@ public class Horse extends Canvas implements Runnable{ //paint(), repaint()
 	}
 	@Override
 	public void run() {
+		this.flag = true;
 		long millis = (long)(Math.random()*1000)+1;
-		while(true) {
+		while(flag) {
 			try {
 				Thread.sleep(millis);
 			} catch (InterruptedException e) {
