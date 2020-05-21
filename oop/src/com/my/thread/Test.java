@@ -30,7 +30,10 @@ public class Test {
 //		one.start(); // java.lang.IllegalThreadStateException
 		First one1 = new First();
 		one1.start(); // 새로운 Thread-1
-		Second two = new Second();
-		two.run();
+		Second s = new Second();
+//		s.run();
+		
+		Thread two = new Thread(s);
+		two.start();
 	}
 }
