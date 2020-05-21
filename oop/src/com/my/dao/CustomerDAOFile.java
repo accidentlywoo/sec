@@ -200,10 +200,11 @@ public class CustomerDAOFile implements CustomerDAO2{
 
 
 	public Customer selectById(String id) throws FindException {
-		if(CustomerFileDataInput(id) == null){
+		Customer customer = CustomerFileDataInput(id);
+		if(customer == null){
 			throw new FindException("해당 아이디를 찾을 수 없습니다.");
 		}
-		return CustomerFileDataInput(id);
+		return customer;
 	}
 
 	public List<Customer> selectByName(String word) throws FindException {

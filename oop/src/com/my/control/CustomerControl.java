@@ -21,7 +21,7 @@ public class CustomerControl {
 	private FailView failView;
 	
 	private CustomerControl() {
-		//this.customerService = new CustomerService2();
+		this.customerService = new CustomerService2();
 //		this.successView = new SuccessView();
 		successView = SuccessView.getInstance();
 //		this.failView = new FailView();
