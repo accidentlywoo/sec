@@ -1,8 +1,6 @@
 package com.my.gui;
 
-import java.awt.Canvas;
 import java.awt.Container;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,23 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-class Horse extends Canvas{ //paint(), repaint()
-	String name;
-	int x = 0, y = 10; // px 단위 위치
-	public Horse(String name) {
-		this.name = name;
-	}
-	@Override
-	public void paint(Graphics g) { // 컨테이너에 Canvas객체가 추가되면 paint() 자동호출됨
-		g.drawString(name, x, y);
-	}
-	@Override
-	public void update(Graphics g) {
-		x = 10;
-		super.update(g);
-	}
-}
 
 public class HorseRace {
 	public static void main(String[] args) {
@@ -39,10 +20,12 @@ public class HorseRace {
 		c = frame.getContentPane();
 		
 		horses = new Horse[3];
+		
 		int horsesLen = horses.length;
-		for(int i = 0; i < horsesLen; i++) {
-			horses[i] = new Horse((i+1)+" 번 말");
-		}
+		
+		horses[0] = new Horse((1)+" 번 말");
+		horses[1] = new Horse((2)+" 번 말");
+		horses[2] = new Horse((3)+" 번 말");
 		
 		horseRun = new JButton("달려");
 		horseReady = new  JButton("준비");
@@ -77,10 +60,8 @@ public class HorseRace {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for(int i = 0; i < horsesLen; i++) {
-					for(int j = 0; j < 20; j++) {
-						horses[i].x += 10;
-						horses[i].repaint();
-					}
+					Thread t = new Thread(horses[i]);
+					t.start();
 				}
 			}
 		});
