@@ -2,16 +2,24 @@ package com.my.thread;
 
 public class ScheduleTest {
 	public static void main(String[] args) {
-		Third one = new Third();
-		for(int i = 1; i < 10; i++) {
-			System.out.println((i+99)*1.0F);
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+//		Third one = new Third();
+//		Fourth f = new Fourth();
+//		Customer c = new Customer();
+////		f.setName("첫번째");
+////		one.setName("두번째");
+//		c.setName("Customer");
+//		one.start();
+//		f.start();
+//		c.start();
+		Fifth one = new Fifth(1, 10);
+		Fifth two = new Fifth(11,20);
+		
 		one.start();
+		two.start();
+		
+		System.out.println(one.getTot()); // 결과값이 다르다!
+		System.out.println(one.getTot());
+		System.out.println(two.getTot());
 		
 		System.out.println("main()의 끝입니다.");
 	}
