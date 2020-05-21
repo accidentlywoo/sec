@@ -21,7 +21,7 @@ public class CustomerService2 {
 	private CustomerDAO2 customerDAO;
 	public CustomerService2() {
 //		customerDAO = new CustomerDAOList();
-//		customerDAO = new CustomerDAOArray();
+//		customerDAO = new CustomerDAOArray(); 
 //		customerDAO = new CustomerDAOFile();
 //		customerDAO = new CustomerDAOFileSave();
 //		-> DAO 변수에 대입할 값을 외부 customer.properties를 활용해
@@ -32,7 +32,7 @@ public class CustomerService2 {
 			env.load(new FileInputStream("customers.properties"));
 			String daoClassName = env.getProperty("dao");
 			// 런타임 다이나믹 로드해보기!
-			Class clazz = Class.forName(daoClassName);
+			Class<?> clazz = Class.forName(daoClassName);
 			// 작업으로 로그한 클래스 타입으로 객체 생성
 			Object object = clazz.newInstance(); //public 매개변수 없는 생성자 호출
 			// 객체를 인스턴스 변수 dao에 대입
