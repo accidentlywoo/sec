@@ -20,6 +20,7 @@ public class TCPServer {
 		 ServerSocket ss = null;
 		 Socket s = null;
 		 InputStream is;
+		 Scanner sc = null;
 		 try {
 			ss = new ServerSocket(port);// 포트 열기
 			System.out.println("포트 열기 성공"); 
@@ -30,14 +31,22 @@ public class TCPServer {
 			System.out.println(clientAddress+"클라이언트가 접속했습니다."); // getHostName() IP
 			System.out.println("클라이언트 컴터 이름 : " + clientInfo.getHostName());
 			is = s.getInputStream();
-			Scanner sc = new Scanner(is);
-			String msg = sc.nextLine();
-			System.out.println("클라이언트가 보내준 메시지 : " + msg);
+			sc = new Scanner(is, "utf8");
+			while(true) {
+				String msg = new String(sc.nextLine());
+				if(msg.equals("quit")) {
+					break;
+				}
+				System.out.println("클라이언트가 보내준 메시지 : " + msg);
+			}
 		 }catch (BindException e) { // 충분히 일어날 수 있는 Exception은 처리해주자
 			System.out.println(port + "이미 사용중인 포트입니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
+			if(sc != null) {
+				sc.close();
+			}
 			if(s != null) {
 				try {
 					s.close(); // Socket을 먼저 닫아야 한다.

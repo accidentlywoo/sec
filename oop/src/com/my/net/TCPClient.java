@@ -19,22 +19,21 @@ public class TCPClient {
 		String serverIP ="127.0.0.1"; //localhost 인터넷 연결없이도 루프빽 포트로 사용쌉 가능
 		Socket s = null;
 		OutputStream os = null;
+		Writer w = null;
+		Scanner sc = null;
 		try {
 			s = new Socket(serverIP, port);
 			os = s.getOutputStream(); // 소캣과 연결된 출력 스트림얻기
-			Scanner sc = new Scanner(System.in);
-			Writer w = new OutputStreamWriter(os);
+			sc = new Scanner(System.in);
+			w = new OutputStreamWriter(os);
 			
 			String msg;
-			while(true) {
+			do {
 				System.out.println("서버로 보낼 문자열을 입력하세요. 종료하려면 quit을 입력하세요. : ");
 				msg = sc.nextLine();
 				w.write(msg+"\n");
 				w.flush();
-				if(msg.equals("quit")) {
-					break;
-				}
-			}
+			}while(!msg.equals("quit")) ;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}catch (ConnectException e) {
@@ -46,6 +45,13 @@ public class TCPClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
+			if(w != null) {
+				try {
+					w.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			if(s != null) {
 				try {
 					s.close();
