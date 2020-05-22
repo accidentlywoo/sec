@@ -2,7 +2,9 @@ package com.my.net;
 
 import java.io.IOException;
 import java.net.BindException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 
 public class TCPServer {
 	public static void main(String[] args) {
@@ -14,19 +16,31 @@ public class TCPServer {
 		 port = 5432;
 		 // 2. 서버가 포트를 열어야 한다. 포트를 여는 library는 ServerSocket
 		 ServerSocket ss = null;
+		 Socket s = null;
 		 try {
 			ss = new ServerSocket(port);// 포트 열기
 			System.out.println("포트 열기 성공"); 
-			ss.accept(); // Client 접속을 기다린다. Socket객체가 반환
-			System.out.println("클라이언트가 접속했습니다.");
-		}catch (BindException e) { // 충분히 일어날 수 있는 Exception은 처리해주자
+			s= ss.accept(); // Client 접속을 기다린다. Socket객체가 반환
+			
+			InetAddress clientInfo = s.getInetAddress();
+			String clientAddress = clientInfo.getHostAddress();
+			System.out.println(clientAddress+"클라이언트가 접속했습니다.");
+			
+		 }catch (BindException e) { // 충분히 일어날 수 있는 Exception은 처리해주자
 			System.out.println(port + "이미 사용중인 포트입니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
+			if(s != null) {
+				try {
+					s.close(); // Socket을 먼저 닫아야 한다.
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 			if(ss != null) {
 				try {
-					ss.close();
+					ss.close(); // ServerSocket을 가장 나중에 닫아야 한다.
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
