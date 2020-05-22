@@ -29,7 +29,7 @@ public class TCPClient {
 			
 			Writer w = new OutputStreamWriter(os);
 			w.write(msg+"\n");
-			
+			w.flush();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}catch (ConnectException e) {
