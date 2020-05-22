@@ -23,9 +23,12 @@ public class Horse extends Canvas implements Runnable{ //paint(), repaint()
 	}
 	@Override
 	public void run() {
-		this.flag = true;
 		long millis = (long)(Math.random()*1000)+1;
+		this.flag = true;
 		while(flag) {
+			if(this.x>=340) {
+				this.flag = false;
+			}
 			try {
 				Thread.sleep(millis);
 			} catch (InterruptedException e) {
