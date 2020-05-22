@@ -5,7 +5,7 @@ public class Share {
 	public void inc() {
 		for(int i = 1; i <= 100; i++) { 
 			synchronized (this) {
-				this.notify();
+				this.notify(); //흐름 파악!
 				System.out.println("before inc() this.i : " + this.i);
 				this.i = this.i +1;// -> 공유 자원
 				System.out.println("after inc() this.i = "+this.i);
