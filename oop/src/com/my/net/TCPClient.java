@@ -1,11 +1,13 @@
 package com.my.net;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class TCPClient {
 	public static void main(String[] args) {
@@ -20,10 +22,19 @@ public class TCPClient {
 		try {
 			s = new Socket(serverIP, port);
 			os = s.getOutputStream(); // 소캣과 연결된 출력 스트림얻기
-//			os.write('A');
-			String msg = "안녕."; // 인코딩 맞춰야 한다.
-			byte[] arr = msg.getBytes();
-			os.write(arr);
+			Scanner sc = new Scanner(System.in);
+			Writer w = new OutputStreamWriter(os);
+			
+			String msg;
+			while(true) {
+				System.out.println("서버로 보낼 문자열을 입력하세요. 종료하려면 quit을 입력하세요. : ");
+				msg = sc.nextLine();
+				w.write(msg+"\n");
+				w.flush();
+				if(msg.equals("quit")) {
+					break;
+				}
+			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}catch (ConnectException e) {

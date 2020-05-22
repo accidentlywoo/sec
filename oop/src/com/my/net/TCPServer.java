@@ -30,11 +30,9 @@ public class TCPServer {
 			System.out.println(clientAddress+"클라이언트가 접속했습니다."); // getHostName() IP
 			System.out.println("클라이언트 컴터 이름 : " + clientInfo.getHostName());
 			is = s.getInputStream();
-			byte[] bArr = new byte[1024];
 			Scanner sc = new Scanner(is);
 			String msg = sc.nextLine();
 			System.out.println("클라이언트가 보내준 메시지 : " + msg);
-			
 		 }catch (BindException e) { // 충분히 일어날 수 있는 Exception은 처리해주자
 			System.out.println(port + "이미 사용중인 포트입니다.");
 		} catch (IOException e) {
