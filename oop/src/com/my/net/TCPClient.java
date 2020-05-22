@@ -1,6 +1,8 @@
 package com.my.net;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -10,11 +12,18 @@ public class TCPClient {
 		// 서버 ip와 서버 port를 알고 있어야 한다.
 		int port = 5432;
 //		String serverIP = "192.168.0.159";
-		String serverIP = "192.168.0.115"; // localhost
+//		String serverIP = "192.168.0.167"; // localhost
+		String serverIP = "192.168.0.118";
 //		String serverIP ="127.0.0.1"; //localhost 인터넷 연결없이도 루프빽 포트로 사용쌉 가능
 		Socket s = null;
+		OutputStream os = null;
 		try {
 			s = new Socket(serverIP, port);
+			os = s.getOutputStream(); // 소캣과 연결된 출력 스트림얻기
+//			os.write('A');
+			String msg = "우여니 입니다."; // 인코딩 맞춰야 한다.
+			byte[] arr = msg.getBytes(msg);
+			os.write(arr);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}catch (ConnectException e) {
