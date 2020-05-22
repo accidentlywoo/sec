@@ -66,5 +66,7 @@ public class HorseRace {
 				}
 			}
 		});
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 }
