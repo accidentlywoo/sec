@@ -30,7 +30,7 @@ public class TCPServer {
 			System.out.println(clientAddress+"클라이언트가 접속했습니다."); // getHostName() IP
 			System.out.println("클라이언트 컴터 이름 : " + clientInfo.getHostName());
 			is = s.getInputStream();
-			
+			byte[] bArr = new byte[1024];
 			Scanner sc = new Scanner(is);
 			String msg = sc.nextLine();
 			System.out.println("클라이언트가 보내준 메시지 : " + msg);
