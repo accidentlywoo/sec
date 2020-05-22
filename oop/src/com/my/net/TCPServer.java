@@ -1,6 +1,7 @@
 package com.my.net;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 
 public class TCPServer {
@@ -13,16 +14,13 @@ public class TCPServer {
 		 port = 5432;
 		 // 2. 서버가 포트를 열어야 한다. 포트를 여는 library는 ServerSocket
 		 ServerSocket ss = null;
-		 ServerSocket sA = null;
 		 try {
 			ss = new ServerSocket(port);// 포트 열기
-			sA = new ServerSocket(port);//java.net.BindException
-			/*
-			 * 같은 Transport [TCP/UDP]에서 같은 포트를 뚫으면 BindException발생
-			 * UDP로 같은 포트쓰면 익셉션 안난다.
-			 */
 			System.out.println("포트 열기 성공"); 
-			ss.accept();
+			ss.accept(); // Client 접속을 기다린다. Socket객체가 반환
+			System.out.println("클라이언트가 접속했습니다.");
+		}catch (BindException e) { // 충분히 일어날 수 있는 Exception은 처리해주자
+			System.out.println(port + "이미 사용중인 포트입니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
