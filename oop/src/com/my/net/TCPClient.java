@@ -1,11 +1,13 @@
 package com.my.net;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class TCPClient {
 	public static void main(String[] args) {
@@ -13,17 +15,21 @@ public class TCPClient {
 		int port = 5432;
 //		String serverIP = "192.168.0.159";
 //		String serverIP = "192.168.0.167"; // localhost
-		String serverIP = "192.168.0.118";
-//		String serverIP ="127.0.0.1"; //localhost 인터넷 연결없이도 루프빽 포트로 사용쌉 가능
+//		String serverIP = "192.168.0.118";
+		String serverIP ="127.0.0.1"; //localhost 인터넷 연결없이도 루프빽 포트로 사용쌉 가능
 		Socket s = null;
 		OutputStream os = null;
 		try {
 			s = new Socket(serverIP, port);
 			os = s.getOutputStream(); // 소캣과 연결된 출력 스트림얻기
-//			os.write('A');
-			String msg = "우여니 입니다."; // 인코딩 맞춰야 한다.
-			byte[] arr = msg.getBytes(msg);
-			os.write(arr);
+			
+			Scanner sc = new Scanner(System.in);
+			System.out.println("서버로 보낼 문자열을 입력하세요.");
+			String msg = sc.nextLine();
+			
+			Writer w = new OutputStreamWriter(os);
+			w.write(msg+"\n");
+			
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}catch (ConnectException e) {
