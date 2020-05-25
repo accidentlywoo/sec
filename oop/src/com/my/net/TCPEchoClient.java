@@ -12,8 +12,8 @@ import java.net.UnknownHostException;
 
 public class TCPEchoClient {
 	public static void main(String[] args) {
-		int port = 9874;
-		String serverIp = "192.168.0.115";
+		int port = 9876;
+		String serverIp = "192.168.0.118";
 		Socket s = null;
 		OutputStream os = null;
 		BufferedWriter bw = null;

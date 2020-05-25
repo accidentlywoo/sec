@@ -8,7 +8,7 @@ import java.net.SocketException;
 
 public class TCPEchoMultiServer {
 	public static void main(String[] args) {
-		int port = 9874;
+		int port = 9876;
 		ServerSocket ss = null;
 		Socket s = null;
 		try {
