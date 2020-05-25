@@ -19,6 +19,7 @@ public class TCPEchoClient {
 		BufferedWriter bw = null;
 		BufferedReader br = null;
 		try {
+			
 			s = new Socket(serverIp, port);
 			os = s.getOutputStream();
 			bw = new BufferedWriter(new OutputStreamWriter(os));
@@ -28,7 +29,7 @@ public class TCPEchoClient {
 			bw.flush();
 			System.out.println(br.readLine());
 			
-			bw.write("wid2:p2:n2:a2\n");
+			bw.write("!!!!wid2:p2:n2:a2\n");
 			bw.flush();
 			System.out.println(br.readLine());
 			
