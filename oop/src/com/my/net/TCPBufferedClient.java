@@ -21,9 +21,9 @@ public class TCPBufferedClient {
 			s = new Socket(serverIp, port);
 			os = s.getOutputStream();
 			bw = new BufferedWriter(new OutputStreamWriter(os));
-			bw.write("1 \n"); bw.flush();
-			bw.write("2 \n"); bw.flush();
-			bw.write("3 \n"); bw.flush();
+			bw.write("id1:p1:n1:a1 \n"); bw.flush();
+			bw.write("id2:p2:n2:a2 \n"); bw.flush();
+			bw.write("id3:p3:n3:a3 \n"); bw.flush();
 			bw.write("quit \n"); bw.flush();
 //			String msg;
 //			do {
