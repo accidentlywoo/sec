@@ -3,7 +3,7 @@ package com.my.vo;
 public class Customer extends Person{
 	private static final long serialVersionUID = 1L;
 	private String id;
-	transient private String pwd;
+	transient private String pwd; // 객체 직렬화 대상 제외
 	public Customer() {
 		// super(); 컴파일 시점에 자동 추가됨
 	}
