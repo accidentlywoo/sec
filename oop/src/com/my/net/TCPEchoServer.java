@@ -21,21 +21,47 @@ public class TCPEchoServer {
 			ss = new ServerSocket(port);
 			while(true) {
 				s = ss.accept();
-				br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-				bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-				
-				while(true) {
-					String receive = br.readLine();
+				try {
+					br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+					bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 					
-					if(receive == null) {
-						break;
+					while(true) {
+						String receive = br.readLine();
+						
+						if(receive.equals("quit")) {
+							break;
+						}
+						bw.write(receive+"\n");
+						bw.flush();
 					}
-					
-					if(receive.equals("quit")) {
-						break;
+				}catch (NullPointerException e) { // br.readLine() 클라이언트가 강제 연결끊을경우
+					e.printStackTrace();
+				}
+				catch (IOException e) {
+					e.printStackTrace();
+				}finally { // 한 Client의 대응에서 발생할 수 있는 Exception은 안쪽으로 빼놓자.
+					System.out.println(s.getPort()+"클라이언트와 접속 해제했습니다.");
+					if(bw != null) {
+						try {
+							bw.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 					}
-					bw.write(receive+"\n");
-					bw.flush();
+					if(br != null) {
+						try {
+							br.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+					if(s != null) {
+						try {
+							s.close();
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}catch (BindException e) { // Exception의 Scope를 고려하지 않으면, 의미없는 서버를 만들 수 있다.
@@ -45,27 +71,6 @@ public class TCPEchoServer {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
-			if(bw != null) {
-				try {
-					bw.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(br != null) {
-				try {
-					br.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-			if(s != null) {
-				try {
-					s.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
 			if(ss != null) {
 				try {
 					ss.close();
