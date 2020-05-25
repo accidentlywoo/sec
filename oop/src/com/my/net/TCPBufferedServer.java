@@ -1,7 +1,8 @@
 package com.my.net;
 
-import java.io.DataInputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -12,19 +13,20 @@ public class TCPBufferedServer {
 		int port = 6543;
 		ServerSocket ss = null;
 		Socket s = null;
-		DataInputStream dis = null;
+		BufferedReader br = null;
 		try {
 			ss = new ServerSocket(port);
 			s = ss.accept();
-			
-			
-			dis = new DataInputStream(s.getInputStream());
-			
+			br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			String[] arr = null;
 			while(true) {
-				int receiveInt = dis.readInt();
-				boolean receiveBool = dis.readBoolean();
-				String receiveUTF = dis.readUTF();
-				System.out.println("클라이언트가 보낸 메세지 : " + receiveInt+", "+ receiveBool +", " +receiveUTF);
+				String receive = br.readLine();
+				String delim = ":";
+				arr = receive.split(delim);
+				System.out.println("id = " +  arr[0] + ", name = "+arr[1]);
+				if(receive.equals("quit")) {
+					break;
+				}
 			}
 		}catch (BindException e) {
 			System.out.println(port + "이미 사용중인 포트입니다.");
