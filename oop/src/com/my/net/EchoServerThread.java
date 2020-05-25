@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
+import java.net.SocketException;
+import java.util.Scanner;
 
 public class EchoServerThread extends Thread {
 	private Socket s;
@@ -24,6 +26,8 @@ public class EchoServerThread extends Thread {
 			}
 		}catch (NullPointerException e) { // br.readLine() 클라이언트가 강제 연결끊을경우
 			e.printStackTrace();
+		}catch (SocketException e) {
+			// 반복문이 계속되면서 발생 / 클라이언트 연결이 끊겼을 때.
 		}catch (IOException e) {
 			e.printStackTrace();
 		}finally { // 한 Client의 대응에서 발생할 수 있는 Exception은 안쪽으로 빼놓자.

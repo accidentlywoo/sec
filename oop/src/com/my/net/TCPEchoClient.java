@@ -8,16 +8,19 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.ConnectException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class TCPEchoClient {
 	public static void main(String[] args) {
 		int port = 9876;
-		String serverIp = "192.168.0.118";
+		String serverIp = "192.168.0.115";
 		Socket s = null;
 		OutputStream os = null;
 		BufferedWriter bw = null;
 		BufferedReader br = null;
+		Scanner sc = null;
 		try {
 			
 			s = new Socket(serverIp, port);
@@ -25,20 +28,22 @@ public class TCPEchoClient {
 			bw = new BufferedWriter(new OutputStreamWriter(os));
 			br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 			
-			bw.write("wid1:p1:n1:a1\n");
-			bw.flush();
-			System.out.println(br.readLine());
+			sc = new Scanner(System.in);
 			
-			bw.write("!!!!wid2:p2:n2:a2\n");
-			bw.flush();
-			System.out.println(br.readLine());
-			
-			bw.write("wid3:p3:n3:a3\n");
-			bw.flush();
-			System.out.println(br.readLine());
+			while(true) {
+				String receive = null;
+				System.out.println("메시지를 입력하세요. : ");
+				receive = sc.nextLine()+"\n";
+				bw.write(receive);
+				bw.flush();
+				System.out.println(br.readLine());
+			}
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
-		}catch (ConnectException e) {
+		} catch (ConnectException e) { // 연결되지 않을때
+			System.out.println();
+		} catch(SocketException e) { // 연결은됬으나 상대쪽에서 연결을 끊었을때.
+			System.out.println("서버와의 연결이 끊겼습니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally {
