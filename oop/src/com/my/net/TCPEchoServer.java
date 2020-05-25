@@ -19,22 +19,26 @@ public class TCPEchoServer {
 		BufferedWriter bw = null;
 		try {
 			ss = new ServerSocket(port);
-			s = ss.accept();
-			br = new BufferedReader(new InputStreamReader(s.getInputStream()));
-			bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 			while(true) {
+				s = ss.accept();
+				br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+				bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 				
-				String receive = br.readLine();
-				if(receive == null) {
-					break;
+				while(true) {
+					String receive = br.readLine();
+					
+					if(receive == null) {
+						break;
+					}
+					
+					if(receive.equals("quit")) {
+						break;
+					}
+					bw.write(receive+"\n");
+					bw.flush();
 				}
-				if(receive.equals("quit")) {
-					break;
-				}
-				bw.write(receive+"\n");
-				bw.flush();
 			}
-		}catch (BindException e) {
+		}catch (BindException e) { // Exception의 Scope를 고려하지 않으면, 의미없는 서버를 만들 수 있다.
 			System.out.println(port + "이미 사용중인 포트입니다.");
 		}catch (SocketException e) {
 			// 반복문이 계속되면서 발생
