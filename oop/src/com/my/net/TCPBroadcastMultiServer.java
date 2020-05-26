@@ -6,13 +6,18 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class TCPBroadcastMultiServer {
 	public static void main(String[] args) {
 		int port = 1234;
 		ServerSocket ss = null;
 		Socket s = null;
-		List<BroadcastServerThread> list = new ArrayList<BroadcastServerThread>();
+		// ArrayList는 Thread Safe 한가? 
+		// -> 자료구조에서 이미 구현되있고, 최적화된 자료구조를 사용하자
+		// 변수의 자료형은 구체화된 클래스형태를 사용하지말고 일반화된 형태를 사용하자
+		// ex) ArrayList<~> X -> List<~>
+		List<BroadcastServerThread> list = new Vector<>();
 		try {
 			ss = new ServerSocket(port); // BindException
 			while(true) {
