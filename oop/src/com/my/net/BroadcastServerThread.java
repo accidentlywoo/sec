@@ -13,7 +13,7 @@ public class BroadcastServerThread extends Thread {
 	private Socket s;
 	private BufferedReader br;
 	private BufferedWriter bw;
-	private String clientAddres;
+	private String clientAddress;
 	private List<BroadcastServerThread>list;
 	
 	private String receive() throws IOException {
@@ -35,14 +35,14 @@ public class BroadcastServerThread extends Thread {
 	@Override
 	public void run() { // Thread run()에서 throws가 없기때문에, throws사용불가. 메소드 overriding 규칙췤
 		try {
-			String sendMsg = clientAddres + "가 접속했습니다.";
+			String sendMsg = clientAddress + "가 접속했습니다.";
 			broadcast(sendMsg);
 			String receive;
 			while((receive =receive()) != null) {
 				if(receive.equals("quit")) {
 					break;
 				}
-				broadcast(clientAddres +" > : "+receive +"\n");
+				broadcast(clientAddress +" > : "+receive +"\n");
 			}
 		}catch (NullPointerException e) { // br.readLine() 클라이언트가 강제 연결끊을경우
 			e.printStackTrace();
@@ -51,7 +51,7 @@ public class BroadcastServerThread extends Thread {
 		}catch (IOException e) {
 			e.printStackTrace();
 		}finally { // 한 Client의 대응에서 발생할 수 있는 Exception은 안쪽으로 빼놓자.
-			String sendMsg = clientAddres + "가 접속 해제했습니다.";
+			String sendMsg = clientAddress + "가 접속 해제했습니다.";
 			broadcast(sendMsg);
 			if(bw != null) {
 				try {
@@ -84,7 +84,7 @@ public class BroadcastServerThread extends Thread {
 	public BroadcastServerThread(Socket s, List<BroadcastServerThread> list) throws IOException {
 		this.list = list;
 		this.s = s;
-		clientAddres  = this.s.getInetAddress().getHostName();
+		clientAddress  = this.s.getInetAddress().getHostName();
 		br = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
 	}

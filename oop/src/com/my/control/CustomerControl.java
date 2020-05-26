@@ -15,16 +15,13 @@ import com.my.vo.Customer;
 public class CustomerControl {
 
 	private static CustomerControl control = new CustomerControl();
-//	private static final CustomerControl control = new CustomerControl();
 	private CustomerService2 customerService;
 	private SuccessView successView;
 	private FailView failView;
 	
 	private CustomerControl() {
 		this.customerService = new CustomerService2();
-//		this.successView = new SuccessView();
 		successView = SuccessView.getInstance();
-//		this.failView = new FailView();
 		failView = FailView.getInstance();
 	}
 	
