@@ -23,6 +23,10 @@ public class CustomerMainView {
 	private SuccessView successView;
 	private FailView failView;
 	
+	private String receive() throws IOException{
+		return this.bufferedReader.readLine();
+	}
+	
 	public CustomerMainView() {
 		this.sc = new Scanner(System.in);
 		successView = SuccessView.getInstance();
@@ -59,35 +63,53 @@ public class CustomerMainView {
 		System.out.println("----- 가입하기 입력-------");
 		Customer customer = new Customer();
 		try {
-			bufferedWriter.write("mainmenu1");
 			System.out.print("아이디 : ");
 			String id = getSc().nextLine();
+			bufferedWriter.write("login:"+id+":");
+			bufferedWriter.flush();
 			customer.setId(id);
 			System.out.print("비밀번호 : ");
 			String pwd = getSc().nextLine();
+			bufferedWriter.write(pwd+":");
+			bufferedWriter.flush();
 			customer.setPwd(pwd);
 			System.out.print("이름 : ");
 			String name = getSc().nextLine();
+			bufferedWriter.write(name+":");
+			bufferedWriter.flush();
 			customer.setName(name);
 			System.out.print("주소 : ");
 			String addr = getSc().nextLine();
+			bufferedWriter.write(addr+":");
+			bufferedWriter.flush();
 			customer.setAddr(addr);
-			bufferedWriter.write(customer.toString());
+			bufferedWriter.write(customer.toString()+"\r\n");
+			bufferedWriter.flush();
+			String receive;
+			while((receive = receive()) != null) {
+				System.out.println(receive);
+				if(receive.equals("가입성공")) {
+					break;
+				}
+			}
+//			this.mainMenuView();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
 	
 	public void findAllView() {
 		try {
-			bufferedWriter.write("mainmenu2");
+			bufferedWriter.write("findAll\n\r");
 			bufferedWriter.flush();
+			String receive;
+			while((receive= receive())!= null) {
+				System.out.println(receive);
+			}
 		} catch (NullPointerException e) {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		resultView("전체 검색");
 	}
 	
 	public void findByIdView() {

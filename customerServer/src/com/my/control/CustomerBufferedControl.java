@@ -4,8 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.SocketException;
@@ -58,12 +56,6 @@ public class CustomerBufferedControl extends Thread {
 		
 	}
 	
-	public void loginControl(String id, String pwd) {
-		try {
-			Customer result = customerService.findById(id);
-		} catch (FindException e) {
-		}
-	}
 	public void modifyControll(Customer customer) throws FindException {
 		try {
 			customerService.modify(customer);
@@ -79,29 +71,43 @@ public class CustomerBufferedControl extends Thread {
 	}
 	@Override
 	public void run() {
-		String sendMsg = "접속 IP : " + clientAddress;
-		broadConnectMessage(sendMsg);
+//		String sendMsg = "접속 IP : " + clientAddress;
+//		broadConnectMessage(sendMsg);
 		String receive; // 뒤에 "\n" 꼭 붙
+		String[] receiveSplit;
 		try {
 			while((receive = receive()) != null) {
-				if(receive.equals("9")) break;
-				
-				if(receive.split(":")[0].equals("mainmenu1")) {
-					bufferedReader.readLine();
-					Customer customer = new Customer();
-					customerService.add(customer);
-				}else if(receive.split(":")[0].equals("mainmenu2")) {
+				System.out.println(receive());
+				System.out.println(receive);
+				receiveSplit = receive.split(":");
+				if(receiveSplit[0].equals("findAll")) {
+					System.out.println(receiveSplit[0]);
 					List<Customer> result = customerService.findAll();
 					for(Customer item : result) {
-						bufferedWriter.write(item.toString());
+						bufferedWriter.write(item.toString()+"\n");
+						bufferedWriter.flush();
+						System.out.println(item.toString());
 					}
-				}if(receive.split(":")[0].equals("mainmenu3")) {
-					Customer result = customerService.findById(receive.split(":")[1]);
-					bufferedWriter.write(result.toString());
-				}if(receive.equals("mainmenu4")) { // login
-					
-				}else {
-					bufferedWriter.write("실패");
+				}else if(receiveSplit[0].equals("login")) {
+					System.out.println(receiveSplit[0]);
+					try {
+						Customer result = new Customer();
+						result.setId(receiveSplit[1]);
+						result.setPwd(receiveSplit[2]);
+						result.setName(receiveSplit[3]);
+						result.setAddr(receiveSplit[4]);
+						try {
+							customerService.add(result);
+							bufferedWriter.write(result+"가입성공\n");
+							bufferedWriter.flush();
+						} catch (AddException e) {
+							bufferedWriter.write(result+"가입실패\n");
+							bufferedWriter.flush();
+						}
+					} catch (FindException e) {
+						bufferedWriter.write("가입실패\n");
+						bufferedWriter.flush();
+					}
 				}
 			}
 		} catch (NullPointerException e) {
@@ -109,15 +115,18 @@ public class CustomerBufferedControl extends Thread {
 			System.out.println("Socket에 문제가 생겼습니다.");
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (AddException e) {
+		} 
+//		catch (AddException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} 
+		catch (FindException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (FindException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			sendMsg = clientAddress + "가 접속 해제했습니다.";
-			broadSendMessage(sendMsg);
+		} 
+		finally {
+//			sendMsg = clientAddress + "가 접속 해제했습니다.";
+//			broadSendMessage(sendMsg);
 			if(socket != null) {
 				try {
 					socket.close();
