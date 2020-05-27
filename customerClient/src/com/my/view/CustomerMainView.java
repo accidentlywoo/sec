@@ -105,6 +105,9 @@ public class CustomerMainView {
 			String receive;
 			while((receive= receive())!= null) {
 				System.out.println(receive);
+				if(receive.equals("전체조회성공")) {
+					break;
+				}
 			}
 		} catch (NullPointerException e) {
 		} catch (IOException e) {

@@ -26,7 +26,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 		fileName = "customers.dat";
 	}
 
-	private void CustomerFileDataOutputList(List<Customer> result){
+	private synchronized void CustomerFileDataOutputList(List<Customer> result){
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		try {
@@ -58,7 +58,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 		}
 	}
 	
-	private void CustomerFileDataOutput(Customer customer) throws FindException {
+	private synchronized void CustomerFileDataOutput(Customer customer) throws FindException {
 		FileOutputStream fos = null;
 		DataOutputStream dos = null;
 		if(CustomerFileDataInput(customer.getId()) != null){
@@ -93,7 +93,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 		}
 	}
 
-	private List<Customer> CustomerFileDataInputList(Optional<String> word){
+	private synchronized List<Customer> CustomerFileDataInputList(Optional<String> word){
 		ArrayList<Customer> customers = new ArrayList<Customer>();
 		FileInputStream fis = null;
 		DataInputStream dis = null;
@@ -145,7 +145,7 @@ public class CustomerDAOFile implements CustomerDAO2{
 		return customers;
 	}
 
-	private Customer CustomerFileDataInput(String id){
+	private synchronized Customer CustomerFileDataInput(String id){
 		Customer customer = null;
 
 		FileInputStream fis = null;

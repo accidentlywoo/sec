@@ -88,6 +88,8 @@ public class CustomerBufferedControl extends Thread {
 						bufferedWriter.flush();
 						System.out.println(item.toString());
 					}
+					bufferedWriter.write("전체조회성공\n");
+					bufferedWriter.flush();
 				}else if(receiveSplit[0].equals("login")) {
 					System.out.println(receiveSplit[0]);
 					try {
