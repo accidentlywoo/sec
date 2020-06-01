@@ -8,6 +8,14 @@ public class Test {
 	}
 	
 	public static void main(String[] args) {
+		int i = 1;
+		try {
+			if(i == 1) throw new NullPointerException();
+			System.out.println("try");
+		}finally {
+			System.out.println("finally");
+		}
+		System.out.println("end");
 		Thread currentThread = Thread.currentThread();
 		String currtName = currentThread.getName();
 		System.out.println("currentThread Name : " + currtName);

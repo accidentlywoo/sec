@@ -88,7 +88,6 @@ public class CustomerService2 {
 			throw new FindException("로그인 실패");
 		}
 		System.out.println("로그인 성공");
-		
 	}
 	public void  modify(Customer customer) throws ModifyException, FindException {
 		try {
