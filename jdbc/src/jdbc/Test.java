@@ -3,6 +3,7 @@ package jdbc;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +21,6 @@ public class Test {
 		url = "jdbc:oracle:thin:@192.168.0.107:1521:xe";
 		user = "test";
 		password = "test";
-		Statement stmt = null;
 		ResultSet rs = null;
 		// 2. 데이터 베이스 연결
 		try (Connection con = DriverManager.getConnection(url, user, password)){
@@ -29,9 +29,6 @@ public class Test {
 			
 			 // Connection타입의 변수 반환
 			System.out.println("DB와 연결 성공");
-			
-			stmt = con.createStatement();
-			String id = "id1";
 			String selectSQL = "SELECT "
 					+ "prod_no, "
 					+ "prod_price, "
@@ -42,18 +39,22 @@ public class Test {
 			+	"FROM order_info info "
 			+ "JOIN order_line line ON (info.order_no = line.order_no) "
 			+ "JOIN product p ON(p.prod_no = line.order_prod_no) "
-			+ "WHERE order_id = '"+id+"'";
-			//3. SQL구문 송신, 수신
-			rs = stmt.executeQuery(selectSQL);
-			while(rs.next()) {
-				String no = rs.getString("prod_no"); // getString(1)
-				int price = rs.getInt("prod_price"); // getInt(2)
-				int quantity = rs.getInt("주문수량"); // Alias 사용시 알리아스 사용
-				String dt = rs.getString("order_dt");
-				int order_no = rs.getInt("order_no");
-				System.out.println(no +" : " + price + " : " + quantity + " : "+dt+ " : " + order_no );
-			}
+			+ "WHERE order_id = ?";
 			
+			try ( PreparedStatement pstmt = con.prepareStatement(selectSQL)){
+				String id = "id1";
+				pstmt.setString(1, id);
+				//3. SQL구문 송신, 수신
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					String no = rs.getString("prod_no"); // getString(1)
+					int price = rs.getInt("prod_price"); // getInt(2)
+					int quantity = rs.getInt("주문수량"); // Alias 사용시 알리아스 사용
+					String dt = rs.getString("order_dt");
+					int order_no = rs.getInt("order_no");
+					System.out.println(no +" : " + price + " : " + quantity + " : "+dt+ " : " + order_no );
+				}
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
