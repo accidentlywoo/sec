@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import jdbc.com.my.sql.MyConnection;
+import com.my.sql.MyConnection;
 
 public class MyConnectionTest {
 	public static void main(String[] args) {
