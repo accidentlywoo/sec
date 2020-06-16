@@ -16,37 +16,24 @@ public class Postal {
 		this.doro = doro;
 		this.building = building;
 	}
-	
 	public String getZipcode() {
 		return zipcode;
-	}
-	public void setZipcode(String zipcode) {
-		this.zipcode = zipcode;
 	}
 	public String getBuildingno() {
 		return buildingno;
 	}
-	public void setBuildingno(String buildingno) {
-		this.buildingno = buildingno;
-	}
 	public String getCity() {
 		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
 	}
 	public String getDoro() {
 		return doro;
 	}
-	public void setDoro(String doro) {
-		this.doro = doro;
-	}
 	public String getBuilding() {
 		return building;
 	}
-	public void setBuilding(String building) {
-		this.building = building;
+	@Override
+	public String toString() {
+		return "Postal [zipcode=" + zipcode + ", buildingno=" + buildingno + ", city=" + city + ", doro=" + doro
+				+ ", building=" + building + "]";
 	}
-	
-	
 }

@@ -22,10 +22,6 @@ public class MyConnectionTest {
 		Statement stmt = null;
 		PreparedStatement pstmt = null;
 		
-		try {
-			MyConnection.close(rs, stmt, con);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		MyConnection.close(rs, stmt, con);
 	}
 }

@@ -2,3 +2,13 @@
 SELECT * FROM postal
 WHERE building like '%措切背%'
 ;
+SELECT 
+    zipcode
+    ,buildingno
+    ,sido city
+    ,doro
+    ,building
+FROM postal
+WHERE building LIKE '%全劳辨%'
+OR doro || ' ' || building || building2 LIKE '%全劳辨%'
+;

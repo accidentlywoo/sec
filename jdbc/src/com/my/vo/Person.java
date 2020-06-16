@@ -5,12 +5,17 @@ import java.io.Serializable;
 public class Person implements Serializable{
 	private static final long serialVersionUID = 1L;
 	//private String name;
+	private Postal postal;// 도로명 우편번호 정보
 	protected String name;
 	private String addr;
 	
-	public Person() {
-	}
+	public Person() {}
 	public Person(String name, String addr) {
+		this(null, name, addr);
+	}
+	
+	public Person(Postal postal, String name, String addr) {
+		this.postal = postal;
 		this.name = name;
 		this.addr = addr;
 	}

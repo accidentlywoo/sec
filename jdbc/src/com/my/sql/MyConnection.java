@@ -20,20 +20,35 @@ public class MyConnection {
 		System.out.println("JDBC 드라이버 로드 성공");
 		return con;
 	}
-	public static void close(Connection connection) throws SQLException {
+	public static void close(Connection connection)  {
 		if(connection != null) {
-			connection.close();
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
-	public static void close(Statement statement, Connection connection) throws SQLException {
+	public static void close(Statement statement, Connection connection) {
 		if(statement != null) {
-			statement.close();
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		close(connection);
 	}
-	public static void close(ResultSet resultSet, Statement statement, Connection connection) throws SQLException {
+	public static void close(ResultSet resultSet, Statement statement, Connection connection) {
 		if(resultSet != null) {
-			resultSet.close();
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		close(statement, connection);
 	}
