@@ -12,6 +12,10 @@ public class Customer extends Person{
 		this.id = id;
 		this.pwd = pwd;
 	}
+	public Customer(String id, String pwd, String name) {
+		this(id, pwd);
+		this.name = name;
+	}
 	
 	public Customer(String id, String pwd, String name, String addr) {
 		/*

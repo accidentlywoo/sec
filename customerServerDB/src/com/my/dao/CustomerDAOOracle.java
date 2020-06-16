@@ -21,6 +21,34 @@ public class CustomerDAOOracle implements CustomerDAO2{
 
 	@Override
 	public Customer insert(Customer customer) throws AddException, DuplicatedException, FindException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+			con = MyConnection.getConnection();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+			throw new AddException(e.getMessage());
+		}
+		
+		String insertSQL = 
+				"INSERT INTO customer(id, pwd, name) "
+				+ "VALUES (?,?,?)";
+		try {
+			pstmt = con.prepareStatement(insertSQL);
+			pstmt.setString(1, customer.getId());
+			pstmt.setString(2, customer.getPwd());
+			pstmt.setString(3, customer.getName());
+			pstmt.executeUpdate(); //Java는 Auto Commit
+		} catch (SQLException e) {// SQLException 에만 있는 메소드가 있다.
+			e.printStackTrace();
+			if(e.getErrorCode() == 1) { // SQLException만 있는 getErrorCode()
+				// ErrorCode = 1 -> PK중복 에러
+				throw new DuplicatedException("이미 존재하는 ID입니다.");
+			}
+			throw new AddException(e.getMessage());
+		}finally {
+			MyConnection.close(pstmt, con);
+		}
 		return null;
 	}
 
@@ -59,11 +87,7 @@ public class CustomerDAOOracle implements CustomerDAO2{
 		} catch (SQLException e) {
 			throw new FindException("selectById : "+e.getMessage());
 		}finally {
-			try {
-				MyConnection.close(rs, pstmt, con);
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			MyConnection.close(rs, pstmt, con);
 		}
 	}
 
@@ -85,6 +109,13 @@ public class CustomerDAOOracle implements CustomerDAO2{
 		CustomerDAOOracle control = null;
 		control = new CustomerDAOOracle();
 		System.out.println(control.selectById("id1").toString());
+		
+		Customer customer = new Customer("id2","pwd2","name2");
+		try {
+			control.insert(customer);
+		} catch (AddException | FindException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
