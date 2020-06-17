@@ -6,7 +6,7 @@ import java.util.List;
 public class OrderInfo {
 	private int order_no;
 	//private String order_id;
-	private Customer order_c;  // many to one [Has A]
+	private Customer order_c;  // one to one [Has A]
 	private Date order_dt; // java.util.Date사용 java.sql.Date는 util을 상속받은 하위클래스이다.
 	private List<OrderLine> lines; // one to many [Has A]
 	public OrderInfo() {}
