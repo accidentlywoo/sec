@@ -47,4 +47,12 @@ public class OrderInfo {
 	public void setOrder_dt(Date order_dt) {
 		this.order_dt = order_dt;
 	}
+
+	public List<OrderLine> getLines() {
+		return lines;
+	}
+
+	public void setLines(List<OrderLine> lines) {
+		this.lines = lines;
+	}
 }

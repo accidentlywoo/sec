@@ -38,5 +38,12 @@ FROM customer c
 LEFT OUTER JOIN postal p
     ON (c.buildingNo = p.buildingno)
 WHERE 1=1
-AND id = 'id5'
+AND id = 'id1'
+;
+
+SELECT 
+    prod_namem
+    ,prod_no
+    ,prod_price
+FROM product
 ;
