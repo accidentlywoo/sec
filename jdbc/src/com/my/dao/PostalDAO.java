@@ -29,7 +29,7 @@ public class PostalDAO {
 					"    ,building\r\n" + 
 					"FROM postal\r\n" + 
 					"WHERE building LIKE ? " + 
-					"OR doro || ' ' || building || building2 LIKE ?";
+					"OR doro || ' ' || DECODE(building2, '0', building1, building1 ||'-'|| building2) LIKE ?";
 			pstmt = con.prepareStatement(selectByDoro);
 			pstmt.setString(1, "%"+doro+"%");
 			pstmt.setString(2, "%"+doro+"%");
@@ -43,6 +43,8 @@ public class PostalDAO {
 				Postal postal = new Postal(zipcode, buildingno, city, doro1, building);
 				list.add(postal);
 			}
+			if(list.size()==0)
+				throw new FindException("검색 결과가 없습니다.");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

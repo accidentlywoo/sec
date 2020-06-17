@@ -31,6 +31,12 @@ public class Person implements Serializable{
 	public void setAddr(String addr) {
 		this.addr = addr;
 	}
+	public Postal getPostal() {
+		return postal;
+	}
+	public void setPostal(Postal postal) {
+		this.postal = postal;
+	}
 	public void printInfo() {
 		System.out.println("Person [name=" + name + ", addr=" + addr + "]");
 	}

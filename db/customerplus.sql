@@ -16,3 +16,27 @@ ADD addr VARCHAR2(40)
 ;
 
 commit;
+
+SELECT * FROM CUSTOMER
+;
+delete customer
+where id = 'id5'
+;
+ROLLBACK;
+commit;
+
+SELECT 
+     c.id
+    ,c.pwd
+    ,c.name
+    ,p.buildingno
+    ,sido ||' '|| NVL(p.sigungu, ' ') || ' '|| NVL(p.eupmyun, ' ') city
+    ,p.doro || ' ' || DECODE(building2, '0', building1, building1|| '-' ||building2) doro
+    ,p.building
+    ,c.addr
+FROM customer c
+LEFT OUTER JOIN postal p
+    ON (c.buildingNo = p.buildingno)
+WHERE 1=1
+AND id = 'id5'
+;

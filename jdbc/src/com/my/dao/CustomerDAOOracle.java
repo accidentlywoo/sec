@@ -14,6 +14,7 @@ import com.my.exception.ModifyException;
 import com.my.exception.RemoveException;
 import com.my.sql.MyConnection;
 import com.my.vo.Customer;
+import com.my.vo.Postal;
 
 public class CustomerDAOOracle implements CustomerDAO{
 
@@ -29,13 +30,15 @@ public class CustomerDAOOracle implements CustomerDAO{
 		}
 		
 		String insertSQL = 
-				"INSERT INTO customer(id, pwd, name) "
-				+ "VALUES (?,?,?)";
+				"INSERT INTO customer(id, pwd, name, buildingno, addr) "
+				+ "VALUES (?,?,?,?,?)";
 		try {
 			pstmt = con.prepareStatement(insertSQL);
 			pstmt.setString(1, customer.getId());
 			pstmt.setString(2, customer.getPwd());
 			pstmt.setString(3, customer.getName());
+			pstmt.setString(4, customer.getPostal().getBuildingno());
+			pstmt.setString(5, customer.getAddr());
 			pstmt.executeUpdate(); //Java는 Auto Commit
 		} catch (SQLException e) {// SQLException 에만 있는 메소드가 있다.
 			e.printStackTrace();
@@ -68,17 +71,33 @@ public class CustomerDAOOracle implements CustomerDAO{
 		}
 		
 		String selectByIdSQL =
-				"select * from customer\r\n" + 
-				"where id = ?";
+				"SELECT \r\n" + 
+				"     c.id\r\n" + 
+				"    ,c.pwd\r\n" + 
+				"    ,c.name\r\n" + 
+				"    ,p.buildingno\r\n" + 
+				"    ,sido ||' '|| NVL(p.sigungu, ' ') || ' '|| NVL(p.eupmyun, ' ') city\r\n" + 
+				"    ,p.doro || ' ' || DECODE(building2, '0', building1, building1|| '-' ||building2) doro\r\n" + 
+				"    ,p.building\r\n"
+				+ ",p.zipcode " + 
+				"    ,c.addr\r\n" + 
+				"FROM customer c\r\n" + 
+				"LEFT OUTER JOIN postal p\r\n" + 
+				"    ON (c.buildingNo = p.buildingno)\r\n" + 
+				"WHERE 1=1\r\n" + 
+				"AND id =?";
 		try {
 			pstmt = con.prepareStatement(selectByIdSQL);
 			pstmt.setString(1, id);
 			rs = pstmt.executeQuery();
 			if(rs.next()) { // BOF 상태 Begin of File 
 				Customer customer = new Customer();
+				Postal postal = new Postal(rs.getString("zipcode"), rs.getString("buildingno"), rs.getString("city"), rs.getString("doro"),rs.getString("building"));
 				customer.setId(id);
 				customer.setPwd(rs.getString("pwd"));
-				customer.setName("name");
+				customer.setName(rs.getString("name"));
+				customer.setPostal(postal);
+				customer.setAddr(rs.getString("city"));
 				return customer;
 			}
 			throw new FindException("selectById : 찾을 수 없는 아이디 입니다.");
