@@ -66,8 +66,10 @@ public class OrderDAO {
 			for(OrderLine item : lines) {
 				pstmt.setString(1, item.getOrder_p().getProd_no());
 				pstmt.setInt(2, item.getOrder_quantity());
-				pstmt.executeUpdate();
+//				pstmt.executeUpdate();
+				pstmt.addBatch(); // 일괄처리에 추가
 			}
+			pstmt.executeBatch(); // 일괄처리작업 수행
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new AddException(e.getMessage());
