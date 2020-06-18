@@ -12,3 +12,8 @@ FROM postal
 WHERE building LIKE '%全劳辨%'
 OR doro || ' ' || building || building2 LIKE '%全劳辨%'
 ;
+
+SELECT * FROM order_info
+;
+select * from product
+;
