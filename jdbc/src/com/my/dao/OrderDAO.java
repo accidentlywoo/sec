@@ -2,13 +2,19 @@ package com.my.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.my.exception.AddException;
+import com.my.exception.FindException;
 import com.my.sql.MyConnection;
+import com.my.vo.Customer;
 import com.my.vo.OrderInfo;
 import com.my.vo.OrderLine;
+import com.my.vo.Product;
 
 public class OrderDAO {
 	public void insert(OrderInfo info) throws AddException{ //Transaction
@@ -77,5 +83,102 @@ public class OrderDAO {
 			//MyConnection.close(connection); -> insertLines에서도 connection을 사용해야 하기 때문에 커넥션을 close하면 안된다.
 			MyConnection.close(pstmt, null);
 		}
+	}
+	public List<OrderInfo> selectById(String id) throws FindException{
+		Connection connection = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		List<OrderInfo> infos = new ArrayList<OrderInfo>();
+		try {
+			connection = MyConnection.getConnection();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		String selectByIdSQL = 
+				"SELECT \r\n" + 
+				"      oi.order_no\r\n" + 
+				"    , oi.order_id\r\n" + 
+				"    , oi.order_dt\r\n" + 
+				"    , ol.order_prod_no\r\n" + 
+				"    , ol.order_quantity \r\n" + 
+				"    , p.prod_name\r\n" + 
+				"    , p.prod_no\r\n" + 
+				"    , p.prod_price\r\n" + 
+				"    , p.prod_price * ol.order_quantity as total\r\n" + 
+				"FROM order_info oi\r\n" + 
+				"    JOIN order_line ol\r\n" + 
+				"    ON(oi.order_no = ol.order_no)\r\n" + 
+				"    JOIN product p\r\n" + 
+				"    ON(ol.order_prod_no = p.prod_no)\r\n" + 
+				"WHERE oi.order_id = ?\r\n" + 
+				"ORDER BY oi.order_no desc";
+		try {
+			pstmt = connection.prepareStatement(selectByIdSQL);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			OrderInfo info = new OrderInfo();
+			Customer customer = new Customer();
+			OrderLine line = new OrderLine();
+			Product product = new Product();
+			int order_no = 0;
+			int temp_order_no = 0;
+			List<OrderLine> lines = new ArrayList<OrderLine>();
+			while(rs.next()) {
+				temp_order_no = order_no; // 초기 0, 이전 order_no
+				order_no = rs.getInt("order_no"); // 현재 order_no
+				if(temp_order_no == 0) {
+					customer.setId(rs.getString("order_id"));
+					info.setOrder_no(order_no);
+					info.setOrder_c(customer);
+					info.setOrder_dt(rs.getString("order_dt"));
+					
+					product.setProd_no(rs.getString("prod_no"));
+					product.setProd_name(rs.getString("prod_name"));
+					product.setProd_price(rs.getInt("prod_price"));
+					
+					line.setOrder_no(order_no);
+					line.setOrder_p(product);
+					line.setOrder_quantity(rs.getInt("total"));
+					lines.add(line);
+					info.setLines(lines);
+					infos.add(info);
+				}else if(temp_order_no != order_no) {
+					info.setLines(lines);
+					infos.add(info);
+					
+					lines = new ArrayList<OrderLine>();
+					info = new OrderInfo();
+					
+					customer.setId(rs.getString("order_id"));
+					info.setOrder_no(order_no);
+					info.setOrder_c(customer);
+					info.setOrder_dt(rs.getString("order_dt"));
+					
+					product.setProd_no(rs.getString("prod_no"));
+					product.setProd_name(rs.getString("prod_name"));
+					product.setProd_price(rs.getInt("prod_price"));
+					
+					line.setOrder_no(order_no);
+					line.setOrder_p(product);
+					line.setOrder_quantity(rs.getInt("total"));
+					lines.add(line);
+					info.setLines(lines);
+					infos.add(info);
+				}else{
+					product.setProd_no(rs.getString("prod_no"));
+					product.setProd_name(rs.getString("prod_name"));
+					product.setProd_price(rs.getInt("prod_price"));
+					
+					line.setOrder_no(order_no);
+					line.setOrder_p(product);
+					line.setOrder_quantity(rs.getInt("total"));
+					lines.add(line);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return infos;
 	}
 }
