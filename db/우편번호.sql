@@ -25,4 +25,8 @@ select * from product;
 
 INSERT INTO order_info VALUES(ORDER_SEQ.nextval, 'id1', SYSDATE);
 INSERT INTO order_line VALUES(ORDER_SEQ.currval, 'C0001', 1);
+INSERT INTO order_line VALUES(ORDER_SEQ.currval, 'C0002', 2);
+INSERT INTO order_line VALUES(ORDER_SEQ.currval, 'C0003', 3);
+
+commit;
 ROLLBACK;

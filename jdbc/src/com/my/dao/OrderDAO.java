@@ -139,7 +139,7 @@ public class OrderDAO {
 					
 					line.setOrder_no(order_no);
 					line.setOrder_p(product);
-					line.setOrder_quantity(rs.getInt("total"));
+					line.setOrder_quantity(rs.getInt("prod_price"));
 					lines.add(line);
 					info.setLines(lines);
 					infos.add(info);
@@ -161,7 +161,7 @@ public class OrderDAO {
 					
 					line.setOrder_no(order_no);
 					line.setOrder_p(product);
-					line.setOrder_quantity(rs.getInt("total"));
+					line.setOrder_quantity(rs.getInt("prod_price"));
 					lines.add(line);
 					info.setLines(lines);
 					infos.add(info);
@@ -175,6 +175,9 @@ public class OrderDAO {
 					line.setOrder_quantity(rs.getInt("total"));
 					lines.add(line);
 				}
+			}
+			if(infos.size() == 0 ) {
+				throw new FindException("주문 정보가 없습니다.");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
