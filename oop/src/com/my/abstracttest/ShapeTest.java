@@ -1,5 +1,6 @@
 package com.my.abstracttest;
 abstract class Shape{
+	public Shape(){}
 	private double area;
 	public double getArea() {
 		return area;
