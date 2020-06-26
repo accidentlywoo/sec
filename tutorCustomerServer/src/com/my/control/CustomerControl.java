@@ -1,19 +1,13 @@
 package com.my.control;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.List;
 
 import com.my.exception.AddException;
 import com.my.exception.FindException;
 import com.my.exception.ModifyException;
 import com.my.exception.RemoveException;
-import com.my.io.DataIO;
 import com.my.service.CustomerService2;
-import com.my.share.CustomerShare;
 import com.my.vo.Customer;
 
 public class CustomerControl {
@@ -62,7 +56,7 @@ public class CustomerControl {
 	public void logoutControl() throws IOException{
 		//CustomerShare.loginedCustomer = null;
 		
-//		sendSuccess("·Î±×¾Æ¿ô ¼º°ø");
+//		sendSuccess("ï¿½Î±×¾Æ¿ï¿½ ï¿½ï¿½ï¿½ï¿½");
 	}
 
 }
