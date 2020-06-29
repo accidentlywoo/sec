@@ -1,6 +1,6 @@
-package step1;
+package step2.treeset;
 
-public class Person{
+public class Person implements Comparable<Person>{
 	private int id;
     private String name;
     private int age;
@@ -45,7 +45,7 @@ public class Person{
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "\r\nPerson{" +
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
@@ -75,6 +75,13 @@ public class Person{
 			return (this.id ==person.id);
 		}
 		return true;
+	}
+
+	@Override
+	public int compareTo(Person person) {
+//		return (this.id - person.id);//오름차순
+//		return (this.id - person.id) * (-1); //내림차순
+		return this.name.compareTo(person.getName());
 	}
 
 	

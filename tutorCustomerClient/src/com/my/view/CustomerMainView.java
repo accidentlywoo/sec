@@ -18,7 +18,7 @@ public class CustomerMainView {
 	private FailView failView = FailView.getInstance();
 	
 	private int port = 2345;
-	private String serverIp = "192.168.0.118";
+	private String serverIp = "192.168.0.107";
 	private Socket s;
 	private DataIO dio;
 	public CustomerMainView() throws UnknownHostException, IOException {
