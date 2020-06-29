@@ -2,23 +2,24 @@ package step2.treeset;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 
 public class PersonTreeSet {
-	private HashSet<Person> hashSet;
+	private TreeSet<Person> treeSet;
 	
 	public PersonTreeSet() {
-		hashSet = new HashSet<Person>();
+		treeSet = new TreeSet<Person>();
 	}
 	public void addPerson(Person personLee) {
-		hashSet.add(personLee);
+		treeSet.add(personLee);
 	}
 	public boolean removePerson(String person_name) {
-		Iterator<Person> ir = hashSet.iterator();
+		Iterator<Person> ir = treeSet.iterator();
 		while (ir.hasNext()) {
 			Person person = ir.next();
 			if(person.getName() == person_name) {
-				hashSet.remove(person);
+				treeSet.remove(person);
 				return true;
 			}
 		}
@@ -26,12 +27,12 @@ public class PersonTreeSet {
 		return false;
 	}
 	public void showAllPerson() {
-		for(Person person : hashSet) {
+		for(Person person : treeSet) {
 			System.out.println(person);
 		}
 	}
 	@Override
 	public String toString() {
-		return "PersonTreeSet [hashSet=" + hashSet + "]\r\n";
+		return "PersonTreeSet [hashSet=" + treeSet + "]\r\n";
 	}
 }

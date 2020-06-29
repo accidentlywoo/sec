@@ -1,6 +1,8 @@
 package step2.treeset;
 
-public class Person implements Comparable<Person>{
+import java.util.Comparator;
+
+public class Person implements Comparator<Person>{
 	private int id;
     private String name;
     private int age;
@@ -77,11 +79,16 @@ public class Person implements Comparable<Person>{
 		return true;
 	}
 
+//	@Override
+//	public int compareTo(Person person) {
+////		return (this.id - person.id);//오름차순
+////		return (this.id - person.id) * (-1); //내림차순
+//		return this.name.compareTo(person.getName());
+//	}
+
 	@Override
-	public int compareTo(Person person) {
-//		return (this.id - person.id);//오름차순
-//		return (this.id - person.id) * (-1); //내림차순
-		return this.name.compareTo(person.getName());
+	public int compare(Person person1, Person person2) {
+		return (person1.id - person2.id);
 	}
 
 	
