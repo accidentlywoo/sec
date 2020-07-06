@@ -28,6 +28,8 @@ public class MapPractice {
 		while(entryIterator.hasNext()) {
 			Map.Entry<String, Integer> entry = entryIterator.next();
 			System.out.println(entry);
+			System.out.println(entry.getKey());
+			System.out.println(entry.getValue());
 		}
 	}
 }
