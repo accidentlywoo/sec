@@ -1,6 +1,7 @@
 # Java
 
-WIKI정리
+
+: WIKI 참고, Java8, Thread, MVC, SQL
 
 ## :blue_book: 이것이 자바다
 '이것이 자바다' : 신용권 저
